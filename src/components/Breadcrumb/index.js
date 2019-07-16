@@ -10,7 +10,7 @@ const Breadcrumb = () => {
               <div className="row">
                 <div className="col-lg-6">
                   <div className="breadcome-heading">
-                    <form role="search" >
+                    <form role="search">
                       <input
                         type="text"
                         placeholder="Search..."

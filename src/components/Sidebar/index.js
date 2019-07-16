@@ -1,5 +1,7 @@
 import React from "react";
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 const Sidebar = () => {
   return (
     <div className="left-sidebar-pro">
@@ -15,8 +17,8 @@ const Sidebar = () => {
         <div className="left-custom-menu-adp-wrap">
           <ul className="nav navbar-nav left-sidebar-menu-pro">
             <li className="nav-item">
-              <a
-                href="/"
+              <Link
+                to="/"
                 data-toggle="dropdown"
                 role="button"
                 aria-expanded="false"
@@ -27,8 +29,8 @@ const Sidebar = () => {
                 <span className="indicator-right-menu mini-dn">
                   <i className="fa indicator-mn fa-angle-left" />
                 </span>
-              </a>
-              <div
+              </Link>
+              {/* <div
                 role="menu"
                 className="dropdown-menu left-menu-dropdown animated flipInX"
               >
@@ -44,22 +46,22 @@ const Sidebar = () => {
                 <a href="widgets.html" className="dropdown-item">
                   Widgets
                 </a>
-              </div>
+              </div> */}
             </li>
             <li className="nav-item">
-              <a
-                href="/"
+              <Link
+                to="/EditMember"
                 data-toggle="dropdown"
                 role="button"
                 aria-expanded="false"
                 className="nav-link dropdown-toggle"
               >
                 <i className="fa big-icon fa-envelope" />{" "}
-                <span className="mini-dn">Mailbox</span>{" "}
+                <span className="mini-dn">Payment</span>{" "}
                 <span className="indicator-right-menu mini-dn">
                   <i className="fa indicator-mn fa-angle-left" />
                 </span>
-              </a>
+              </Link>
               <div
                 role="menu"
                 className="dropdown-menu left-menu-dropdown animated flipInX"

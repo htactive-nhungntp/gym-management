@@ -1,12 +1,15 @@
 import React from "react";
 
-const Table = () => {
+import TableRow from "./TableRow";
+
+const Table = props => {
+  let countId = 0;
   return (
     <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
       <div className="sparkline12-list shadow-reset mg-t-30">
         <div className="sparkline12-hd">
           <div className="main-sparkline12-hd">
-            <h1>Table</h1>
+            <h1>Members List</h1>
             <div className="sparkline12-outline-icon">
               <span className="sparkline12-collapse-link">
                 <i className="fa fa-chevron-up" />
@@ -26,30 +29,18 @@ const Table = () => {
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Username</th>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>Phone</th>
+                  <th>DOB</th>
+                  <th>Date Register</th>
+                  <th>Options</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>Mamun</td>
-                  <td>Roshid</td>
-                  <td>@Facebook</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Suhag</td>
-                  <td>Khan</td>
-                  <td>@Twitter</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>Sakil</td>
-                  <td>Shak</td>
-                  <td>@Linkedin</td>
-                </tr>
+                {props.dataTable.map(member => (
+                  <TableRow data={member} count={++countId} key={member.key} />
+                ))}
               </tbody>
             </table>
           </div>

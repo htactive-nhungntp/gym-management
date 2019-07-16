@@ -1,6 +1,6 @@
 import React from "react";
 
-import Header from "../Header";
+import Header from "../header";
 import Footer from "../Footer";
 import Sidebar from "../Sidebar";
 import Breadcrumb from "../Breadcrumb";
@@ -16,6 +16,7 @@ const Layout = props => {
         <BreadcrumbMobile />
         <div className="container-fluid mg-b-40 mg-t-30">{props.children}</div>
       </div>
+
       <Footer />
     </div>
   );
