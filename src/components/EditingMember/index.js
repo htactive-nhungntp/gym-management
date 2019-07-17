@@ -15,6 +15,7 @@ class EditingMember extends React.Component {
 
   gotdata = data => {
     var Temp = [];
+    console.log("data ne: ", data);
     let members = data.val();
     let key = Object.keys(members);
     for (var i = 0; i < key.length; i++) {
@@ -43,7 +44,7 @@ class EditingMember extends React.Component {
 
   loadData = () => {
     const member = this.props.dataTable.find(
-      mem => mem.key === this.props.match.params.id
+      mem => mem.key === this.props.match.params
     );
 
     console.log("key to compare", this.props.match.params);

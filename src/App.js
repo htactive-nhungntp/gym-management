@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 
-import firebaseConfig from "./ConfigFirebase";
-import firebase from "firebase";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Table from "./components/Table";
 import Statistic from "./components/Statistic";
 
+import { getdata } from "./helpers/HandleFirebase";
 import EditingMember from "../src/components/EditingMember";
 // import MembersList from "../src/components/Table";
 // import MembersList from "../src/components/Table";
@@ -19,14 +18,8 @@ class App extends Component {
     super(props);
     this.state = {
       members: []
-      // billsDay: [],
-      // billsMonth: [],
-      // trainer: [],
-      // profit: [],
     };
 
-    this.app = firebase.initializeApp(firebaseConfig);
-    this.database = this.app.database().ref("members");
     // this.addMem(
     //   "Nguyen Thi Thu Huong",
     //   "Quang Tri",
@@ -35,32 +28,32 @@ class App extends Component {
     // );
   }
 
-  gotdata = data => {
-    var Temp = [];
-    let members = data.val();
-    let key = Object.keys(members);
-    for (var i = 0; i < key.length; i++) {
-      var k = key[i];
-      var id = members[k].id;
-      var name = members[k].name;
-      var address = members[k].address;
-      var phone = members[k].phone;
-      var DOB = members[k].DOB;
-      var createAt = members[k].createAt;
-      Temp.push({ key: k, id, name, address, phone, DOB, createAt });
-    }
+  // gotdata = data => {
+  //   var Temp = [];
+  //   let members = data.val();
+  //   let key = Object.keys(members);
+  //   for (var i = 0; i < key.length; i++) {
+  //     var k = key[i];
+  //     var id = members[k].id;
+  //     var name = members[k].name;
+  //     var address = members[k].address;
+  //     var phone = members[k].phone;
+  //     var DOB = members[k].DOB;
+  //     var createAt = members[k].createAt;
+  //     Temp.push({ key: k, id, name, address, phone, DOB, createAt });
+  //   }
 
-    this.setState({
-      members: Temp
-    });
-  };
+  //   this.setState({
+  //     members: Temp
+  //   });
+  // };
 
-  errdata = data => {
-    console.log(data);
-  };
+  // errdata = data => {
+  //   console.log(data);
+  // };
 
   componentDidMount() {
-    this.database.on("value", this.gotdata, this.errdata);
+    // getdata();
   }
 
   randomId() {
@@ -72,50 +65,13 @@ class App extends Component {
     return text;
   }
 
-  addMem = (name, address, phone, DOB) => {
-    firebase
-      .database()
-      .ref("members")
-      .push({
-        id: this.randomId(),
-        name,
-        address,
-        phone,
-        DOB,
-        createAt:
-          new Date().getDate() +
-          "/" +
-          (new Date().getMonth() + 1) +
-          "/" +
-          new Date().getFullYear()
-      });
-  };
+  // addMember = () => {
+  //   this.setState({
+  //     newData: ""
+  //   });
+  // };
 
-  addMember = () => {
-    this.setState({
-      newData: ""
-    });
-  };
-
-  updatevalue = key => {};
-
-  update = key => {
-    console.log(key);
-    firebase
-      .database()
-      .ref()
-      .child(`members/${key}`)
-      .set({ name: "Nguyen Van A", createAt: "11112" });
-  };
-
-  delete = key => {
-    console.log(key);
-    firebase
-      .database()
-      .ref()
-      .child(`members/${key}`)
-      .remove();
-  };
+  // updatevalue = key => {};
 
   render() {
     const members = this.state.members;
