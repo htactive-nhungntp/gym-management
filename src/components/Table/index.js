@@ -1,6 +1,7 @@
 import React from "react";
 
-// import TableRow from "./TableRow";
+import TableRow from "./TableRow";
+import TableButton from "./TableButton";
 import { getdata } from "../.././helpers/HandleFirebase";
 
 class Table extends React.Component {
@@ -11,22 +12,23 @@ class Table extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.handleData();
+  async componentDidMount() {
+    const members = await getdata("members");
+    this.setState({
+      members: members
+    });
   }
 
-  handleData = async () => {
-    const members = await getdata("members");
-    console.log("state", members);
-    // this.setState({
-    //   members: members
-    // });
-  };
-
   render() {
-    // const members = this.state.members;
+    const { members } = this.state;
+    console.log("this.state", members);
     return (
       <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+        <TableButton
+          color="btn-success"
+          content="Add New Member"
+          pathName={`/AddMember`}
+        />
         <div className="sparkline12-list shadow-reset mg-t-30">
           <div className="sparkline12-hd">
             <div className="main-sparkline12-hd">
@@ -59,9 +61,9 @@ class Table extends React.Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* {members.map(member => (
-                    <TableRow />
-                  ))} */}
+                  {members.map(member => (
+                    <TableRow key={member.id} data={member} />
+                  ))}
                 </tbody>
               </table>
             </div>

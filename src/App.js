@@ -12,6 +12,7 @@ import EditingMember from "../src/components/EditingMember";
 // import MembersList from "../src/components/Table";
 
 import "./App.css";
+import AddNewMember from "./components/AddNewMember";
 
 class App extends Component {
   constructor(props) {
@@ -81,13 +82,17 @@ class App extends Component {
           <Route
             exact
             path="/"
-            component={({ match }) => (
-              <Table dataTable={members} match={match} />
-            )}
+            component={({ match }) => <Table match={match} />}
           />
           <Route
             exact
             path="/EditMember/:id"
+            component={({ match }) => <EditingMember match={match} />}
+          />
+          <Route exact path="/AddMember" component={() => <AddNewMember />} />
+          <Route
+            exact
+            path="/DeleteMember/:id"
             component={({ match }) => <EditingMember match={match} />}
           />
           {/* <Route path="/EditMember" component={MemberEditing} /> */}

@@ -9,50 +9,55 @@ export default (!firebase.apps.length
 
 export const getdata = async tableName => {
   const database = firebase.database().ref(tableName);
-  let objects = [];
-  let membersArr = [];
-  await database.on("value", snapshot => {
-    objects = snapshot.val();
-    if (objects) {
-      membersArr = Object.keys(objects).map(key => ({
-        ...objects[key],
-        id: key
-      }));
-      console.log("membersArr ne ", membersArr);
-      return membersArr;
-    }
-  });
-  console.log("membersArr1 1111ne ", membersArr);
-  return membersArr;
+  const snapshot = await database.once("value");
+  const data = snapshot.val();
+  return Object.entries(data).map(d => ({
+    ...d[1],
+    id: d[0]
+  }));
 };
 
-// export const update = key => {
-//   console.log(key);
-//   firebase
-//     .database()
-//     .ref()
-//     .child(`members/${key}`)
-//     .set({ name: "Nguyen Van A", createAt: "11112" });
-// };
+export const updateData = (id, updateObject) => {
+  firebase
+    .database()
+    .ref()
+    .child(`members/${id}`)
+    .set({
+      name: updateObject.name,
+      address: updateObject.address,
+      DOB: updateObject.DOB,
+      phone: updateObject.phone,
+      createAt: updateObject.createAt
+    });
+};
 
-// export const addMem = (name, address, phone, DOB) => {
-//   firebase
-//     .database()
-//     .ref("members")
-//     .push({
-//       id: this.randomId(),
-//       name,
-//       address,
-//       phone,
-//       DOB,
-//       createAt:
-//         new Date().getDate() +
-//         "/" +
-//         (new Date().getMonth() + 1) +
-//         "/" +
-//         new Date().getFullYear()
-//     });
-// };
+const randomId = () => {
+  let text = "";
+  let possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (let i = 0; i < 10; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  return text;
+};
+
+export const addMem = (name, address, phone, DOB) => {
+  firebase
+    .database()
+    .ref("members")
+    .push({
+      id: randomId(),
+      name,
+      address,
+      phone,
+      DOB,
+      createAt:
+        new Date().getDate() +
+        "/" +
+        (new Date().getMonth() + 1) +
+        "/" +
+        new Date().getFullYear()
+    });
+};
 
 // export const gotdata = () => {
 //   let a = getdata();

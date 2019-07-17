@@ -2,6 +2,8 @@ import React from "react";
 
 import TableButton from "../Table/TableButton";
 
+import { getdata, updateData } from "../.././helpers/HandleFirebase";
+
 class EditingMember extends React.Component {
   constructor(props) {
     super(props);
@@ -9,59 +11,57 @@ class EditingMember extends React.Component {
       updateName: "",
       updateAddress: "",
       updatePhone: "",
-      updateDOB: ""
+      updateDOB: "",
+      id: ""
     };
   }
 
-  gotdata = data => {
-    var Temp = [];
-    console.log("data ne: ", data);
-    let members = data.val();
-    let key = Object.keys(members);
-    for (var i = 0; i < key.length; i++) {
-      var k = key[i];
-      var id = members[k].id;
-      var name = members[k].name;
-      var address = members[k].address;
-      var phone = members[k].phone;
-      var DOB = members[k].DOB;
-      var createAt = members[k].createAt;
-      Temp.push({ key: k, id, name, address, phone, DOB, createAt });
-    }
-
+  async componentDidMount() {
+    const members = await getdata("members");
+    console.log("members: ", members);
+    let mem = members.find(mem => mem.id === this.props.match.params.id);
     this.setState({
-      members: Temp
+      updateName: mem.name,
+      updateAddress: mem.address,
+      updatePhone: mem.phone,
+      updateDOB: mem.DOB,
+      updateCreateAt: mem.createAt,
+      id: mem.id
     });
-  };
-
-  errdata = data => {
-    console.log(data);
-  };
-
-  componentDidMount() {
-    this.database.on("value", this.gotdata, this.errdata);
   }
 
-  loadData = () => {
-    const member = this.props.dataTable.find(
-      mem => mem.key === this.props.match.params
-    );
-
-    console.log("key to compare", this.props.match.params);
-    console.log("member found", member);
-    this.setState({
-      updateName: member.name,
-      updateAddress: member.address,
-      updatePhone: member.phone,
-      updateDOB: member.DOB
-    });
+  update = id => {
+    let updateObject = {
+      name: this.state.updateName,
+      address: this.state.updateAddress,
+      phone: this.state.updatePhone,
+      DOB: this.state.updateDOB,
+      createAt: this.state.updateCreateAt
+    };
+    updateData(id, updateObject);
   };
 
-  toggleChange = event => {
-    this.setState({ updateName: event.target.value });
+  toggleChange = (event, stateName) => {
+    switch (stateName) {
+      case "updateName":
+        this.setState({ updateName: event.target.value });
+        break;
+      case "updateAddress":
+        this.setState({ updateAddress: event.target.value });
+        break;
+      case "updatePhone":
+        this.setState({ updatePhone: event.target.value });
+        break;
+      case "updateDOB":
+        this.setState({ updateDOB: event.target.value });
+        break;
+      default:
+        break;
+    }
   };
 
   render() {
+    console.log(this.state.updateAddress);
     return (
       <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
         <div className="col-xs-1 col-sm-1 col-md-1 col-lg-1" />
@@ -71,27 +71,23 @@ class EditingMember extends React.Component {
             <h2>Update</h2>
           </div>
           <div className="form-group row">
-            <label htmlFor="staticEmail" className="col-sm-2 col-form-label">
-              Name
-            </label>
+            <label className="col-sm-2 col-form-label">Name</label>
             <div className="col-sm-10">
               <input
                 type="text"
                 className="form-control"
-                onChange={this.toggleChange}
+                onChange={e => this.toggleChange(e, "updateName")}
                 value={this.state.updateName}
               />
             </div>
           </div>
           <div className="form-group row">
-            <label htmlFor="inputPassword" className="col-sm-2 col-form-label">
-              Address
-            </label>
+            <label className="col-sm-2 col-form-label">Address</label>
             <div className="col-sm-10">
               <input
                 type="text"
                 className="form-control"
-                onChange={this.toggleChange}
+                onChange={e => this.toggleChange(e, "updateAddress")}
                 value={this.state.updateAddress}
               />
             </div>
@@ -104,7 +100,7 @@ class EditingMember extends React.Component {
               <input
                 type="text"
                 className="form-control"
-                onChange={this.toggleChange}
+                onChange={e => this.toggleChange(e, "updatePhone")}
                 value={this.state.updatePhone}
               />
             </div>
@@ -117,7 +113,7 @@ class EditingMember extends React.Component {
               <input
                 type="date"
                 className="form-control"
-                onChange={this.toggleChange}
+                onChange={e => this.toggleChange(e, "updateDOB")}
                 value={this.state.updateDOB}
               />
             </div>
@@ -126,7 +122,12 @@ class EditingMember extends React.Component {
           <div className="btn-edit">
             <TableButton to="/" content="Cancel" color="btn-danger" /> &nbsp;
             &nbsp;
-            <TableButton to="/" content="Save" color="btn-success" />
+            <button
+              className=" btn btn-large btn-success"
+              onClick={() => this.update(this.state.id)}
+            >
+              Save
+            </button>
           </div>
         </div>
       </div>
