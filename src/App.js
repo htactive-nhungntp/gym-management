@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Table from "./components/Table";
 import Statistic from "./components/Statistic";
 import Machine from "./components/Machines";
+import FormMachine from "./components/Form/FormMachine"
 
 
 
@@ -14,6 +14,8 @@ import EditingMember from "../src/components/EditingMember";
 // import MembersList from "../src/components/Table";
 
 import "./App.css";
+import AddNewMember from "./components/AddNewMember";
+
 
 class App extends Component {
   constructor(props) {
@@ -76,16 +78,14 @@ class App extends Component {
   // updatevalue = key => {};
 
   render() {
-    const members = this.state.members;
+   // const members = this.state.members;
     return (
       <Router>
         <Layout>
           <Route
             exact
             path="/"
-            component={({ match }) => (
-              <Table dataTable={members} match={match} />
-            )}
+            component={({ match }) => <Table match={match} />}
           />
           <Route
             exact
@@ -96,6 +96,12 @@ class App extends Component {
             exact
             path="/machine"
             component={({ match }) => <Machine match={match} />}
+            />
+          <Route exact path="/AddMember" component={() => <AddNewMember />} />
+          <Route
+            exact
+            path="/DeleteMember/:id"
+            component={({ match }) => <EditingMember match={match} />}
           />
           {/* <Route path="/EditMember" component={MemberEditing} /> */}
           {/* <Route path="/DeleteMember" component={Detail} />
@@ -103,6 +109,7 @@ class App extends Component {
           <Route path="/PaymentDay" component={Detail} />
           <Route path="/PaymentMonth" component={Detail} /> */}
           {/*  */}
+          <Route exact path="/AddMachine" component={() => <FormMachine />} />
           <Statistic />
         </Layout>
       </Router>

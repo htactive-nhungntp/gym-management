@@ -10,7 +10,7 @@ const Sidebar = () => {
           <a href="/">
             <img src="img/message/1.jpg" alt="" />
           </a>
-          <h3>Andrar Son</h3>
+          <h3>Nhung Huong</h3>
           <p>Developer</p>
           <strong>AP+</strong>
         </div>
