@@ -5,7 +5,7 @@ const firebaseConfig = {
   projectId: "gym-management-2fecd",
   storageBucket: "gym-management-2fecd.appspot.com",
   messagingSenderId: "222611987531",
-  appId: "1:222611987531:web:673a1a77563a7756"
+  appId: "1:222611987531:web:f0d9f7edcc8a619d"
 };
 
 export default firebaseConfig;

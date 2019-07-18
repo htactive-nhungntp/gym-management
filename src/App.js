@@ -4,8 +4,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Table from "./components/Table";
 import Statistic from "./components/Statistic";
+import Machine from "./components/Machines";
 
-import { getdata } from "./helpers/HandleFirebase";
+
+
 import EditingMember from "../src/components/EditingMember";
 // import MembersList from "../src/components/Table";
 // import MembersList from "../src/components/Table";
@@ -89,6 +91,11 @@ class App extends Component {
             exact
             path="/EditMember/:id"
             component={({ match }) => <EditingMember match={match} />}
+          />
+          <Route
+            exact
+            path="/machine"
+            component={({ match }) => <Machine match={match} />}
           />
           {/* <Route path="/EditMember" component={MemberEditing} /> */}
           {/* <Route path="/DeleteMember" component={Detail} />

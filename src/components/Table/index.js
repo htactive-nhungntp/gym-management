@@ -1,7 +1,7 @@
 import React from "react";
 
 // import TableRow from "./TableRow";
-import { getdata } from "../.././helpers/HandleFirebase";
+import { getdata } from "../../Helpers/HandleFirebase";
 
 class Table extends React.Component {
   constructor(props) {
