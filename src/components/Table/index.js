@@ -1,8 +1,10 @@
 import React from "react";
+import firebase from "firebase";
+import firebaseConfig from "../../ConfigFirebase";
 
 import TableRow from "./TableRow";
 import TableButton from "./TableButton";
-import { getdata } from "../.././helpers/HandleFirebase";
+import { getdata, deleteMem } from "../.././helpers/HandleFirebase";
 
 class Table extends React.Component {
   constructor(props) {
@@ -19,9 +21,20 @@ class Table extends React.Component {
     });
   }
 
+  deleteMember = async key => {
+    let onData = firebase
+      .database()
+      .ref()
+      .child(key);
+    onData.remove();
+    const members = await getdata("members");
+    this.setState({
+      members: members
+    });
+  };
+
   render() {
     const { members } = this.state;
-    console.log("this.state", members);
     return (
       <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
         <TableButton
@@ -62,7 +75,13 @@ class Table extends React.Component {
                 </thead>
                 <tbody>
                   {members.map(member => (
-                    <TableRow key={member.id} data={member} />
+                    <TableRow
+                      key={member.id}
+                      data={member}
+                      deleteMem={() =>
+                        this.deleteMember(`members/${member.id}`)
+                      }
+                    />
                   ))}
                 </tbody>
               </table>
