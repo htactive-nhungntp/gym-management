@@ -1,26 +1,94 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Layout from "./components/Layout";
+import Table from "./components/Table";
+import Statistic from "./components/Statistic";
+import EditingMember from "../src/components/EditingMember";
+import Payment from "./components/Payment";
+import AddNewMember from "./components/AddNewMember";
+import { getdata } from "./helpers/HandleFirebase";
+import "./App.css";
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      members: [],
+      billsDay: []
+    };
+  }
+
+  async componentDidMount() {
+    let billsDay = await getdata(`billsDay`);
+    let members = await getdata(`members`);
+    this.setState({
+      members,
+      billsDay
+    });
+  }
+
+  handlingDateTime(dateTime) {
+    let index = dateTime.search("/");
+    var res = dateTime.substr(index + 1, 1);
+    return res;
+  }
+
+  statisticInMonth = state => {
+    let members = [];
+    members = state.filter(
+      mem =>
+        this.handlingDateTime(mem.createAt) === `${new Date().getMonth() + 1}`
+    );
+    return members;
+  };
+
+  totalMemPer = arrMem => {
+    const members = this.statisticInMonth(arrMem);
+    let percentRegis = (members.length / 100) * 100;
+    return percentRegis;
+  };
+
+  render() {
+    const total = this.state.members;
+    const percent = this.totalMemPer(this.statisticInMonth(this.state.members));
+    return (
+      <Router>
+        <Layout>
+          <Route
+            exact
+            path="/"
+            component={({ match }) => <Table match={match} />}
+          />
+          <Route
+            exact
+            path="/EditMember/:id"
+            component={({ match }) => <EditingMember match={match} />}
+          />
+          <Route exact path="/AddMember" component={() => <AddNewMember />} />
+          <Route
+            exact
+            path="/DeleteMember/:id"
+            component={({ match }) => <EditingMember match={match} />}
+          />
+
+          <Route
+            exact
+            path="/Payment"
+            component={({ match }) => <Payment match={match} />}
+          />
+
+          {/* <Route path="/EditMember" component={MemberEditing} /> */}
+          {/* <Route path="/DeleteMember" component={Detail} />
+          <Route path="/AddMember" component={Detail} />
+          <Route path="/PaymentDay" component={Detail} />
+          <Route path="/PaymentMonth" component={Detail} /> */}
+          {/*  */}
+          <Statistic totalMem={total} percent={percent} />
+        </Layout>
+      </Router>
+    );
+  }
 }
 
 export default App;
