@@ -1,30 +1,22 @@
 import React, { Component } from "react";
 import TableMachine from "../Table/TableMachine";
-import {  withFirebase } from "../../Firebase/context";
+import { withFirebase } from "../../Firebase/context";
 
 class MachineBase extends Component {
   constructor(props) {
     super(props);
-    console.log("This is props: ", props);
     this.state = {
       machine: [],
       newData: " ",
       img: null,
       url: " ",
-      type:[]
+      type: []
     };
   }
 
   deleteMachines = async index => {
     this.props.firebase.deleteMachines(index).remove();
-    let mac = await this.props.firebase.getdata(`machines`);
-    console.log("data here", mac);
-    let type = await this.props.firebase.getdata(`type`);
-    console.log("type here", type);
-    this.setState({
-      machine: mac,
-      type: type
-    });
+    this.loadData();
   };
 
   updateMachines = index => {
@@ -32,32 +24,31 @@ class MachineBase extends Component {
       name: " "
     });
   };
-  
-  async componentDidMount() {
+
+  componentDidMount() {
+    this.loadData();
+  }
+
+  loadData = async () => {
     let mac = await this.props.firebase.getdata(`machines`);
-    console.log("data here", mac);
     let type = await this.props.firebase.getdata(`type`);
-    console.log("type here", type);
     this.setState({
       machine: mac,
       type: type
     });
-  }
+  };
 
   render() {
-    console.log("render", this.state.machine);
     let { machine } = this.state;
     let { type } = this.state;
-    console.log("machine: ", machine);
     return (
       <>
-       <TableMachine
-        machines={machine}
-        types = {type}
-        deleteMachine={this.deleteMachines}
-      />
+        <TableMachine
+          machines={machine}
+          types={type}
+          deleteMachine={this.deleteMachines}
+        />
       </>
-     
     );
   }
 }

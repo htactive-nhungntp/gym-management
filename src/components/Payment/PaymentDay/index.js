@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { callFirebase, getdata } from "../../../helpers/HandleFirebase";
+import { callFirebase, getdata } from "../../../Helpers/HandleFirebase";
 import TableButton from "../PaymentDay";
 
 export default class PaymentDay extends Component {
@@ -65,6 +65,7 @@ export default class PaymentDay extends Component {
             <input
               type="text"
               className="form-control"
+              value={this.state.newName}
               onChange={e => {
                 this.toggleChange(e, "newName");
               }}
@@ -75,6 +76,7 @@ export default class PaymentDay extends Component {
             <input
               type="text"
               className="form-control"
+              value={this.state.newPhone}
               onChange={e => {
                 this.toggleChange(e, "newPhone");
               }}

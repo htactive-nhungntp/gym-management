@@ -8,19 +8,33 @@ require("firebase/firestore");
 class EditMachineBase extends Component {
   constructor(props) {
     super(props);
+    console.log("props: ", this.props);
+    console.log("props: ", this.props.match.params.id);
     this.state = {
-      updateData: " ",
-      updateStatus: " ",
+      updateName: "",
+      updateStatus: "",
       img: null,
       url: "",
-      type_id:" "
+      type_id: ""
     };
+    this.loadData();
   }
+
+  loadData = async () => {
+    let mac = await this.props.firebase.getdata(`machines`);
+    let macParams = mac.find(m => m.id === this.props.match.params.id);
+    this.setState({
+      updateName: macParams.name,
+      updateStatus: macParams.status,
+      url: macParams.image,
+      type_id: macParams.type_id
+    });
+  };
 
   toggleChange = (event, stateName) => {
     switch (stateName) {
       case "addName":
-        this.setState({ updateData: event.target.value });
+        this.setState({ updateName: event.target.value });
         break;
       case "addStatus":
         this.setState({ updateStatus: event.target.value });
@@ -28,24 +42,28 @@ class EditMachineBase extends Component {
       case "addType":
         this.setState({ type_id: event.target.value });
         break;
+      case "addImage":
+        this.setState({ img: event.target.value });
+        break;
       default:
         break;
     }
   };
 
-  addMachines = url => {
-    this.props.firebase.callFirebase(`machines`).push({
-      name: this.state.newData,
-      image: url,
-      status: this.state.status,
-      type_id: this.state.type_id
-    });
+  updateMachines = url => {
+    this.props.firebase
+      .callFirebase(`machines/${this.props.match.params.id}`)
+      .set({
+        name: this.state.updateName,
+        image: url,
+        status: this.state.updateStatus,
+        type_id: this.state.type_id
+      });
   };
 
   handleImage = e => {
     if (e.target.files[0]) {
       const image = e.target.files[0];
-      console.log("image: ", image);
       this.setState(
         () => ({ img: image }),
         () => console.log("state image: ", this.state.img)
@@ -56,6 +74,7 @@ class EditMachineBase extends Component {
   handleUpload = e => {
     e.preventDefault();
     const { img } = this.state;
+    console.log("img ne: ", img);
     const uploadImage = this.props.firebase.storage
       .ref(`images/${img.name}`)
       .put(img);
@@ -76,16 +95,14 @@ class EditMachineBase extends Component {
           .child(img.name)
           .getDownloadURL()
           .then(url => {
-            this.addMachines(url);
+            this.updateMachines(url);
           });
-        this.props.history.push(`/machine`);
+        // this.props.history.push(`/machine`);
       }
     );
   };
 
   render() {
-    console.log(this.props, "props");
-    
     return (
       <div>
         <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
@@ -101,7 +118,7 @@ class EditMachineBase extends Component {
                   type="text"
                   className="form-control"
                   onChange={e => this.toggleChange(e, "addName")}
-                 // value={this.props.machine.name}
+                  value={this.state.updateName}
                 />
               </div>
             </div>
@@ -109,8 +126,13 @@ class EditMachineBase extends Component {
               <label htmlFor="inputImage" className="col-sm-2 col-form-label">
                 Image
               </label>
-              <div className="col-sm-10">
+              <div className="col-sm-10 ">
                 <input type="file" onChange={this.handleImage} />
+                <img
+                  src={this.state.url}
+                  alt="can not upload"
+                  onChange={e => this.toggleChange(e, "addImage")}
+                />
               </div>
             </div>
             <div className="form-group row">
@@ -122,7 +144,7 @@ class EditMachineBase extends Component {
                   className="form-control"
                   type="text"
                   onChange={e => this.toggleChange(e, "addStatus")}
-                 // value= {this.props.machine.status}
+                  value={this.state.updateStatus}
                 />
               </div>
             </div>
@@ -134,7 +156,8 @@ class EditMachineBase extends Component {
                 <select
                   className="form-control"
                   id="type"
-                 // value= {this.props.machine.type_id}
+                  value={this.state.type_id}
+                  onChange={e => this.toggleChange(e, "addType")}
                 >
                   <option value="01">Máy tập thể hình</option>
                   <option value="02">Máy chạy bộ</option>
@@ -157,11 +180,9 @@ class EditMachineBase extends Component {
           </div>
         </div>
       </div>
-      
     );
-    }
+  }
 }
-  
 
 let editMachine = withFirebase(EditMachineBase);
 export default editMachine;

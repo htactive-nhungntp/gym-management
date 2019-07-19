@@ -4,6 +4,7 @@ import firebaseConfig from "../ConfigFirebase";
 import firebase from "firebase";
 
 import { API_RANDOM } from "./Api_url";
+
 export default (!firebase.apps.length
   ? firebase.initializeApp(firebaseConfig)
   : firebase.app());
@@ -11,7 +12,7 @@ export default (!firebase.apps.length
 export const callFirebase = tableName => {
   let onData = firebase.database().ref(tableName);
   return onData;
-
+};
 
 export const getdata = async tableName => {
   const database = callFirebase(tableName);
