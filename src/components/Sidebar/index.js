@@ -30,27 +30,10 @@ const Sidebar = () => {
                   <i className="fa indicator-mn fa-angle-left" />
                 </span>
               </Link>
-              {/* <div
-                role="menu"
-                className="dropdown-menu left-menu-dropdown animated flipInX"
-              >
-                <a href="dashboard.html" className="dropdown-item">
-                  Dashboard v.1
-                </a>
-                <a href="dashboard-2.html" className="dropdown-item">
-                  Dashboard v.2
-                </a>
-                <a href="analytics.html" className="dropdown-item">
-                  Analytics
-                </a>
-                <a href="widgets.html" className="dropdown-item">
-                  Widgets
-                </a>
-              </div> */}
             </li>
             <li className="nav-item">
               <Link
-                to="/EditMember"
+                to="/Payment"
                 data-toggle="dropdown"
                 role="button"
                 aria-expanded="false"

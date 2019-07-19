@@ -1,19 +1,18 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+
 import Layout from "./components/Layout";
 import Table from "./components/Table";
 import Statistic from "./components/Statistic";
+
 import Machine from "./components/Machines";
 import AddMachineBase from "./components/Form/FormMachine"
 import EditMachineBase from "./components/Form/FormMachine/EditMachine"
 
-
-
 import EditingMember from "../src/components/EditingMember";
-// import MembersList from "../src/components/Table";
-// import MembersList from "../src/components/Table";
-// import MembersList from "../src/components/Table";
-
+import Payment from "./components/Payment";
+import AddNewMember from "./components/AddNewMember";
+import { getdata } from "./helpers/HandleFirebase";
 import "./App.css";
 import AddNewMember from "./components/AddNewMember";
 
@@ -22,64 +21,44 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      members: []
+      members: [],
+      billsDay: []
     };
-
-    // this.addMem(
-    //   "Nguyen Thi Thu Huong",
-    //   "Quang Tri",
-    //   "0125896432",
-    //   "20/02/1999"
-    // );
   }
 
-  // gotdata = data => {
-  //   var Temp = [];
-  //   let members = data.val();
-  //   let key = Object.keys(members);
-  //   for (var i = 0; i < key.length; i++) {
-  //     var k = key[i];
-  //     var id = members[k].id;
-  //     var name = members[k].name;
-  //     var address = members[k].address;
-  //     var phone = members[k].phone;
-  //     var DOB = members[k].DOB;
-  //     var createAt = members[k].createAt;
-  //     Temp.push({ key: k, id, name, address, phone, DOB, createAt });
-  //   }
-
-  //   this.setState({
-  //     members: Temp
-  //   });
-  // };
-
-  // errdata = data => {
-  //   console.log(data);
-  // };
-
-  componentDidMount() {
-    // getdata();
+  async componentDidMount() {
+    let billsDay = await getdata(`billsDay`);
+    let members = await getdata(`members`);
+    this.setState({
+      members,
+      billsDay
+    });
   }
 
-  randomId() {
-    let text = "";
-    let possible =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < 10; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    return text;
+  handlingDateTime(dateTime) {
+    let index = dateTime.search("/");
+    var res = dateTime.substr(index + 1, 1);
+    return res;
   }
 
-  // addMember = () => {
-  //   this.setState({
-  //     newData: ""
-  //   });
-  // };
+  statisticInMonth = state => {
+    let members = [];
+    members = state.filter(
+      mem =>
+        this.handlingDateTime(mem.createAt) === `${new Date().getMonth() + 1}`
+    );
+    return members;
+  };
 
-  // updatevalue = key => {};
+  totalMemPer = arrMem => {
+    const members = this.statisticInMonth(arrMem);
+    let percentRegis = (members.length / 100) * 100;
+    return percentRegis;
+  };
 
   render() {
-   // const members = this.state.members;
+    const total = this.state.members;
+    const percent = this.totalMemPer(this.statisticInMonth(this.state.members));
     return (
       <Router>
         <Layout>
@@ -93,11 +72,13 @@ class App extends Component {
             path="/EditMember/:id"
             component={({ match }) => <EditingMember match={match} />}
           />
+
           <Route
             exact
             path="/machine"
             component={({ match }) => <Machine match={match} />}
             />
+
           <Route exact path="/AddMember" component={() => <AddNewMember />} />
           <Route
             exact
@@ -105,19 +86,32 @@ class App extends Component {
             component={({ match }) => <EditingMember match={match} />}
           />
 
+
            <Route
             exact
             path="/EditMachine/:id"
             component={({ match }) => <EditMachineBase match={match} />}
           />
+
+          <Route
+            exact
+            path="/Payment"
+            component={({ match }) => <Payment match={match} />}
+          />
+
+
           {/* <Route path="/EditMember" component={MemberEditing} /> */}
           {/* <Route path="/DeleteMember" component={Detail} />
           <Route path="/AddMember" component={Detail} />
           <Route path="/PaymentDay" component={Detail} />
           <Route path="/PaymentMonth" component={Detail} /> */}
           {/*  */}
+
           <Route exact path="/AddMachine" component={props => <AddMachineBase {...props} />} />
           <Statistic />
+
+          <Statistic totalMem={total} percent={percent} />
+
         </Layout>
       </Router>
     );

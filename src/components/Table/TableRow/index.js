@@ -2,6 +2,10 @@ import React from "react";
 
 import TableButton from "../TableButton/";
 
+const deleteMember = props => {
+  props.deleteMem(`members/${props.data.id}`);
+};
+
 const TableRow = props => {
   return (
     <tr>
@@ -19,7 +23,12 @@ const TableRow = props => {
           id={props.data.id}
         />
         &nbsp; &nbsp;
-        <TableButton color="btn-danger" content="Delete" />
+        <button
+          className="btn btn-large btn-danger"
+          onClick={() => deleteMember(props)}
+        >
+          Delete
+        </button>
       </td>
     </tr>
   );

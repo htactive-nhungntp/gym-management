@@ -3,6 +3,9 @@ import React from "react";
 import TableButton from "../Table/TableButton";
 
 import { addMem } from "../../Helpers/HandleFirebase";
+import { API_RANDOM } from "../../helpers/Api_url";
+import { callFirebase } from "../.././helpers/HandleFirebase";
+
 
 class AddNewMember extends React.Component {
   constructor(props) {
@@ -15,29 +18,36 @@ class AddNewMember extends React.Component {
     };
   }
 
-  async componentDidMount() {}
-
   addMember() {
     const name = this.state.newName;
     const address = this.state.newAddress;
     const phone = this.state.newPhone;
     const DOB = this.state.newDOB;
-    addMem(name, address, phone, DOB);
+
+    let onData = callFirebase(`members`);
+    onData.push({
+      name,
+      address,
+      phone,
+      DOB,
+      createAt: new Date().toLocaleString()
+    });
   }
 
   toggleChange = (event, stateName) => {
     switch (stateName) {
-      case "updateName":
-        this.setState({ updateName: event.target.value });
+
+      case "newName":
+        this.setState({ newName: event.target.value });
         break;
-      case "updateAddress":
-        this.setState({ updateAddress: event.target.value });
+      case "newAddress":
+        this.setState({ newAddress: event.target.value });
         break;
-      case "updatePhone":
-        this.setState({ updatePhone: event.target.value });
+      case "newPhone":
+        this.setState({ newPhone: event.target.value });
         break;
-      case "updateDOB":
-        this.setState({ updateDOB: event.target.value });
+      case "newDOB":
+        this.setState({ newDOB: event.target.value });
         break;
       default:
         break;
@@ -45,7 +55,6 @@ class AddNewMember extends React.Component {
   };
 
   render() {
-    console.log(this.state.updateAddress);
     return (
       <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
         <div className="col-xs-1 col-sm-1 col-md-1 col-lg-1" />
@@ -60,8 +69,8 @@ class AddNewMember extends React.Component {
               <input
                 type="text"
                 className="form-control"
-                onChange={e => this.toggleChange(e, "updateName")}
-                value={this.state.updateName}
+                onChange={e => this.toggleChange(e, "newName")}
+                value={this.state.newName}
               />
             </div>
           </div>
@@ -71,8 +80,8 @@ class AddNewMember extends React.Component {
               <input
                 type="text"
                 className="form-control"
-                onChange={e => this.toggleChange(e, "updateAddress")}
-                value={this.state.updateAddress}
+                onChange={e => this.toggleChange(e, "newAddress")}
+                value={this.state.newAddress}
               />
             </div>
           </div>
@@ -84,8 +93,8 @@ class AddNewMember extends React.Component {
               <input
                 type="text"
                 className="form-control"
-                onChange={e => this.toggleChange(e, "updatePhone")}
-                value={this.state.updatePhone}
+                onChange={e => this.toggleChange(e, "newPhone")}
+                value={this.state.newPhone}
               />
             </div>
           </div>
@@ -97,8 +106,8 @@ class AddNewMember extends React.Component {
               <input
                 type="date"
                 className="form-control"
-                onChange={e => this.toggleChange(e, "updateDOB")}
-                value={this.state.updateDOB}
+                onChange={e => this.toggleChange(e, "newDOB")}
+                value={this.state.newDOB}
               />
             </div>
           </div>
@@ -106,12 +115,13 @@ class AddNewMember extends React.Component {
           <div className="btn-edit">
             <TableButton to="/" content="Cancel" color="btn-danger" /> &nbsp;
             &nbsp;
-            <TableButton
-              className=" btn btn-large btn-success"
+
+            <button
+              className="btn btn-large btn-success"
               onClick={() => this.addMember()}
-            />
-            {/* Save
-            </button> */}
+            >
+              Finish
+            </button>
           </div>
         </div>
       </div>

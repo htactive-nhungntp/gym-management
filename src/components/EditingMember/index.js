@@ -1,8 +1,8 @@
 import React from "react";
 
 import TableButton from "../Table/TableButton";
+import { getdata, callFirebase } from "../.././helpers/HandleFirebase";
 
-import { getdata, updateData } from "../.././Helpers/HandleFirebase";
 
 class EditingMember extends React.Component {
   constructor(props) {
@@ -12,13 +12,13 @@ class EditingMember extends React.Component {
       updateAddress: "",
       updatePhone: "",
       updateDOB: "",
+      updateCreateAt: null,
       id: ""
     };
   }
 
   async componentDidMount() {
     const members = await getdata("members");
-    console.log("members: ", members);
     let mem = members.find(mem => mem.id === this.props.match.params.id);
     this.setState({
       updateName: mem.name,
@@ -30,15 +30,15 @@ class EditingMember extends React.Component {
     });
   }
 
-  update = id => {
-    let updateObject = {
+  update = async id => {
+    let onData = await callFirebase(`members/${id}`);
+    onData.set({
       name: this.state.updateName,
       address: this.state.updateAddress,
       phone: this.state.updatePhone,
-      DOB: this.state.updateDOB,
-      createAt: this.state.updateCreateAt
-    };
-    updateData(id, updateObject);
+      createAt: this.state.updateCreateAt,
+      DOB: this.state.updateDOB
+    });
   };
 
   toggleChange = (event, stateName) => {
@@ -65,7 +65,6 @@ class EditingMember extends React.Component {
     return (
       <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
         <div className="col-xs-1 col-sm-1 col-md-1 col-lg-1" />
-
         <div className="col-xs-10 col-sm-10 col-md-10 col-lg-10">
           <div className="form-group row">
             <h2>Update</h2>
