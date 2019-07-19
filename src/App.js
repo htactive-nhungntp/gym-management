@@ -4,7 +4,8 @@ import Layout from "./components/Layout";
 import Table from "./components/Table";
 import Statistic from "./components/Statistic";
 import Machine from "./components/Machines";
-import FormMachine from "./components/Form/FormMachine"
+import AddMachineBase from "./components/Form/FormMachine"
+import EditMachineBase from "./components/Form/FormMachine/EditMachine"
 
 
 
@@ -103,13 +104,19 @@ class App extends Component {
             path="/DeleteMember/:id"
             component={({ match }) => <EditingMember match={match} />}
           />
+
+           <Route
+            exact
+            path="/EditMachine/:id"
+            component={({ match }) => <EditMachineBase match={match} />}
+          />
           {/* <Route path="/EditMember" component={MemberEditing} /> */}
           {/* <Route path="/DeleteMember" component={Detail} />
           <Route path="/AddMember" component={Detail} />
           <Route path="/PaymentDay" component={Detail} />
           <Route path="/PaymentMonth" component={Detail} /> */}
           {/*  */}
-          <Route exact path="/AddMachine" component={() => <FormMachine />} />
+          <Route exact path="/AddMachine" component={props => <AddMachineBase {...props} />} />
           <Statistic />
         </Layout>
       </Router>

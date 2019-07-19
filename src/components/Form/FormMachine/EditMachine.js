@@ -5,26 +5,25 @@ import { withFirebase } from "../../../Firebase/context";
 import "../../../Firebase/firebase";
 require("firebase/firestore");
 
-class AddMachineBase extends Component {
+class EditMachineBase extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newData: " ",
-      status: " ",
+      updateData: " ",
+      updateStatus: " ",
       img: null,
       url: "",
       type_id:" "
     };
-    console.log("id ",props);
   }
 
   toggleChange = (event, stateName) => {
     switch (stateName) {
       case "addName":
-        this.setState({ newData: event.target.value });
+        this.setState({ updateData: event.target.value });
         break;
       case "addStatus":
-        this.setState({ status: event.target.value });
+        this.setState({ updateStatus: event.target.value });
         break;
       case "addType":
         this.setState({ type_id: event.target.value });
@@ -86,13 +85,14 @@ class AddMachineBase extends Component {
 
   render() {
     console.log(this.props, "props");
+    
     return (
       <div>
         <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
           <div className="col-xs-1 col-sm-1 col-md-1 col-lg-1" />
           <div className="col-xs-10 col-sm-10 col-md-10 col-lg-10">
             <div className="form-group row">
-              <h2>Add New Machine</h2>
+              <h2>Edit Machine</h2>
             </div>
             <div className="form-group row">
               <label className="col-sm-2 col-form-label">Name</label>
@@ -101,7 +101,7 @@ class AddMachineBase extends Component {
                   type="text"
                   className="form-control"
                   onChange={e => this.toggleChange(e, "addName")}
-                  //value={this.pro}
+                 // value={this.props.machine.name}
                 />
               </div>
             </div>
@@ -122,6 +122,7 @@ class AddMachineBase extends Component {
                   className="form-control"
                   type="text"
                   onChange={e => this.toggleChange(e, "addStatus")}
+                 // value= {this.props.machine.status}
                 />
               </div>
             </div>
@@ -133,7 +134,7 @@ class AddMachineBase extends Component {
                 <select
                   className="form-control"
                   id="type"
-                  onChange={e => this.toggleChange(e, "addType")}
+                 // value= {this.props.machine.type_id}
                 >
                   <option value="01">Máy tập thể hình</option>
                   <option value="02">Máy chạy bộ</option>
@@ -156,8 +157,11 @@ class AddMachineBase extends Component {
           </div>
         </div>
       </div>
+      
     );
-  }
+    }
 }
-let machine = withFirebase(AddMachineBase);
-export default machine;
+  
+
+let editMachine = withFirebase(EditMachineBase);
+export default editMachine;

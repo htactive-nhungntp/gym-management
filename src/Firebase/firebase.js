@@ -1,6 +1,7 @@
 import firebase from "firebase";
 import "firebase/auth";
 import "firebase/database";
+import "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBf9ogquG_0IjSO8oyWK8rvlyvPcy9SrpE",
@@ -39,9 +40,9 @@ class Firebase {
       return [];
     }
   };
-  //getMachines = () => this.db.ref("machines");
+  addMachines = () => this.db.ref("machines");
   // editMachines = index => this.db.ref(`machines/${index}`);
-  // deleteMachines = index => this.db.ref(`machines/${index}`);
+   deleteMachines = index => this.db.ref(`machines/${index}`);
 }
 
 console.log("Firebase", firebase.db);

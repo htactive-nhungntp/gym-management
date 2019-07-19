@@ -7,11 +7,39 @@ export default class TableMachine extends Component {
 
     this.state = {
       data: props.machines
+      
     };
-   // console.log("data props", this.state.data);
   }
-
+  
+  deleteMachines = (id) => {
+    this.props.deleteMachine(id)
+  };
   render() {
+    let listType = this.props.machines.map(({id, name, type_id, image, status}) => {
+      console.log("mc.type", type_id);
+      console.log("list type: ", this.props.types)
+      let type = this.props.types.find(tp => tp.id === type_id );
+      return (<tr key={id}>
+        <td>{id}</td>
+        <td>{name}</td>
+        <td>{type.type}</td>
+        <td>
+          <img src={image} alt="" width={60} height={70} />
+        </td>
+        <td>{status}</td>
+       
+        <td>
+          <TableButton
+            color="btn-warning"
+            content="Edit"
+            pathName={`/EditMachine/${id}`}
+            id={id}
+          />
+          &nbsp; &nbsp;
+          <button className=" btn btn-large btn-danger" onClick={()=> this.deleteMachines(`${id}`)} > Delete</button>
+        </td>
+      </tr>)
+    })
     return (
       <div>
         <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
@@ -44,32 +72,14 @@ export default class TableMachine extends Component {
                     <tr>
                       <th>#</th>
                       <th>Name</th>
+                      <th>Type</th>
                       <th>Image</th>
                       <th>Status</th>
                       <th>Options</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {this.props.machines.map(t => (
-                      <tr key={t.id}>
-                        <td>{t.id}</td>
-                        <td>{t.name}</td>
-                        <td>
-                          <img src={t.image} alt="" width={60} height={70} />
-                        </td>
-                        <td>{t.status}</td>
-                        <td>
-                          <TableButton
-                            color="btn-warning"
-                            content="Edit"
-                            // pathName={`/EditMember/${props.data.id}`}
-                            // id={props.data.id}
-                          />
-                          &nbsp; &nbsp;
-                          <TableButton color="btn-danger" content="Delete" />
-                        </td>
-                      </tr>
-                    ))}
+                   {listType}
                   </tbody>
                 </table>
               </div>

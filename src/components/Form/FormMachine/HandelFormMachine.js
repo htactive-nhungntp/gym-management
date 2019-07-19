@@ -1,93 +1,15 @@
-import React, { Component } from "react";
-import "firebase/firestore";
+import React, { Component } from 'react'
 import TableButton from "../../Table/TableButton/index";
-import { withFirebase } from "../../../Firebase/context";
-import "../../../Firebase/firebase";
-require("firebase/firestore");
+export default class HandelFormMachine extends Component {
+   constructor(props){
+       super(props)
+       console.log(props);
+   }
 
-class AddMachineBase extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      newData: " ",
-      status: " ",
-      img: null,
-      url: "",
-      type_id:" "
-    };
-    console.log("id ",props);
-  }
-
-  toggleChange = (event, stateName) => {
-    switch (stateName) {
-      case "addName":
-        this.setState({ newData: event.target.value });
-        break;
-      case "addStatus":
-        this.setState({ status: event.target.value });
-        break;
-      case "addType":
-        this.setState({ type_id: event.target.value });
-        break;
-      default:
-        break;
-    }
-  };
-
-  addMachines = url => {
-    this.props.firebase.callFirebase(`machines`).push({
-      name: this.state.newData,
-      image: url,
-      status: this.state.status,
-      type_id: this.state.type_id
-    });
-  };
-
-  handleImage = e => {
-    if (e.target.files[0]) {
-      const image = e.target.files[0];
-      console.log("image: ", image);
-      this.setState(
-        () => ({ img: image }),
-        () => console.log("state image: ", this.state.img)
-      );
-    }
-  };
-
-  handleUpload = e => {
-    e.preventDefault();
-    const { img } = this.state;
-    const uploadImage = this.props.firebase.storage
-      .ref(`images/${img.name}`)
-      .put(img);
-    uploadImage.on(
-      "state_changed",
-      snapshot => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        this.setState({ progress });
-      },
-      error => {
-        console.log(error);
-      },
-      () => {
-        this.props.firebase.storage
-          .ref("images")
-          .child(img.name)
-          .getDownloadURL()
-          .then(url => {
-            this.addMachines(url);
-          });
-        this.props.history.push(`/machine`);
-      }
-    );
-  };
-
-  render() {
-    console.log(this.props, "props");
-    return (
-      <div>
+    render() {
+        return (
+            <div>
+                 <div>
         <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
           <div className="col-xs-1 col-sm-1 col-md-1 col-lg-1" />
           <div className="col-xs-10 col-sm-10 col-md-10 col-lg-10">
@@ -101,7 +23,7 @@ class AddMachineBase extends Component {
                   type="text"
                   className="form-control"
                   onChange={e => this.toggleChange(e, "addName")}
-                  //value={this.pro}
+                  //value={this.}
                 />
               </div>
             </div>
@@ -125,13 +47,13 @@ class AddMachineBase extends Component {
                 />
               </div>
             </div>
-            <div className="form-group row">
-              <label htmlFor="sel1" className="col-sm-2 col-form-label">
+            <div class="form-group row">
+              <label for="sel1" className="col-sm-2 col-form-label">
                 Type:
               </label>
               <div className="col-sm-10">
                 <select
-                  className="form-control"
+                  class="form-control"
                   id="type"
                   onChange={e => this.toggleChange(e, "addType")}
                 >
@@ -156,8 +78,7 @@ class AddMachineBase extends Component {
           </div>
         </div>
       </div>
-    );
-  }
+            </div>
+        )
+    }
 }
-let machine = withFirebase(AddMachineBase);
-export default machine;
