@@ -1,10 +1,7 @@
 import React from "react";
-import firebase from "firebase";
-import firebaseConfig from "../../ConfigFirebase";
-
 import TableRow from "./TableRow";
 import TableButton from "./TableButton";
-import { getdata, deleteData } from "../.././helpers/HandleFirebase";
+import { getdata, deleteData } from "../.././Helpers/HandleFirebase";
 
 
 class Table extends React.Component {

@@ -2,9 +2,7 @@ import React from "react";
 
 import TableButton from "../Table/TableButton";
 
-import { addMem } from "../../Helpers/HandleFirebase";
-import { API_RANDOM } from "../../helpers/Api_url";
-import { callFirebase } from "../.././helpers/HandleFirebase";
+import { callFirebase } from "../.././Helpers/HandleFirebase";
 
 
 class AddNewMember extends React.Component {

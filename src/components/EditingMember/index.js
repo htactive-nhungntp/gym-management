@@ -1,7 +1,7 @@
 import React from "react";
 
 import TableButton from "../Table/TableButton";
-import { getdata, callFirebase } from "../.././helpers/HandleFirebase";
+import { getdata, callFirebase } from "../.././Helpers/HandleFirebase";
 
 
 class EditingMember extends React.Component {

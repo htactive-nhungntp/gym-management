@@ -1,17 +1,13 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
-import TableButton from "../Table/TableButton";
 import PaymentDay from "./PaymentDay";
 import PaymentMonth from "./PaymentMonth";
 
 import "./payment.css";
 
 export default class index extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+ 
   render() {
     return (
       <Router>

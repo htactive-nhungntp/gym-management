@@ -15,12 +15,13 @@ export default class TableMachine extends Component {
     this.props.deleteMachine(id)
   };
   render() {
+    let count=0
     let listType = this.props.machines.map(({id, name, type_id, image, status}) => {
       console.log("mc.type", type_id);
       console.log("list type: ", this.props.types)
       let type = this.props.types.find(tp => tp.id === type_id );
       return (<tr key={id}>
-        <td>{id}</td>
+        <td>{++count}</td>
         <td>{name}</td>
         <td>{type.type}</td>
         <td>

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
-import { callFirebase, getdata } from "../../../helpers/HandleFirebase";
-import TableButton from "../PaymentDay";
+import { callFirebase, getdata } from "../../../Helpers/HandleFirebase";
 
 export default class PaymentDay extends Component {
   constructor(props) {

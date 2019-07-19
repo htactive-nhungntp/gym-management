@@ -12,9 +12,9 @@ import EditMachineBase from "./components/Form/FormMachine/EditMachine"
 import EditingMember from "../src/components/EditingMember";
 import Payment from "./components/Payment";
 import AddNewMember from "./components/AddNewMember";
-import { getdata } from "./helpers/HandleFirebase";
+import { getdata } from "./Helpers/HandleFirebase";
 import "./App.css";
-import AddNewMember from "./components/AddNewMember";
+
 
 
 class App extends Component {
@@ -108,8 +108,6 @@ class App extends Component {
           {/*  */}
 
           <Route exact path="/AddMachine" component={props => <AddMachineBase {...props} />} />
-          <Statistic />
-
           <Statistic totalMem={total} percent={percent} />
 
         </Layout>
