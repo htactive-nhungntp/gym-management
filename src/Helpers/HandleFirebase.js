@@ -25,3 +25,11 @@ export const getdata = async tableName => {
     return [];
   }
 };
+
+export const deleteData = key => {
+  let onData = firebase
+    .database()
+    .ref()
+    .child(key);
+  return onData;
+};

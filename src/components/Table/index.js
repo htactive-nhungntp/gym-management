@@ -4,7 +4,7 @@ import firebaseConfig from "../../ConfigFirebase";
 
 import TableRow from "./TableRow";
 import TableButton from "./TableButton";
-import { getdata, deleteMem } from "../.././helpers/HandleFirebase";
+import { getdata, deleteData } from "../.././helpers/HandleFirebase";
 
 class Table extends React.Component {
   constructor(props) {
@@ -14,27 +14,26 @@ class Table extends React.Component {
     };
   }
 
-  async componentDidMount() {
-    const members = await getdata("members");
-    this.setState({
-      members: members
-    });
+  componentDidMount() {
+    this.loadData();
   }
 
-  deleteMember = async key => {
-    let onData = firebase
-      .database()
-      .ref()
-      .child(key);
-    onData.remove();
+  loadData = async () => {
     const members = await getdata("members");
     this.setState({
       members: members
     });
   };
 
+  deleteMember = async key => {
+    let onData = deleteData(key);
+    onData.remove();
+    this.loadData();
+  };
+
   render() {
     const { members } = this.state;
+    let count = 0;
     return (
       <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
         <TableButton
@@ -76,6 +75,7 @@ class Table extends React.Component {
                 <tbody>
                   {members.map(member => (
                     <TableRow
+                      count={++count}
                       key={member.id}
                       data={member}
                       deleteMem={() =>

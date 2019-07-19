@@ -1,14 +1,16 @@
 import React from "react";
 
-const Statistic = () => {
+export const Statistic = props => {
+  let day = new Date();
+  let date = day.getMonth() + 1 + "-" + day.getFullYear();
   return (
     <div className="col-lg-3 col-md-6 col-sm-12 col-xs-12">
       <div className="income-dashone-total income-monthly shadow-reset nt-mg-b-30 res-mg-t-30">
         <div className="income-title">
           <div className="main-income-head">
-            <h2>Income</h2>
+            <h2>Registered in {date}</h2>
             <div className="main-income-phara">
-              <p>Monthly</p>
+              <p>View Detail</p>
             </div>
           </div>
         </div>
@@ -16,8 +18,8 @@ const Statistic = () => {
           <div className="income-rate-total">
             <div className="price-adminpro-rate">
               <h3>
-                <span>$</span>
-                <span className="counter">6,08,88,200</span>
+                <span />
+                <span className="counter">{props.totalMem.length} members</span>
               </h3>
             </div>
             <div className="price-graph">
@@ -25,9 +27,9 @@ const Statistic = () => {
             </div>
           </div>
           <div className="income-range">
-            <p>Total income</p>
+            <p>Gym room</p>
             <span className="income-percentange">
-              98% <i className="fa fa-bolt" />
+              {props.percent} % <i className="fa fa-bolt" />
             </span>
           </div>
           <div className="clear" />

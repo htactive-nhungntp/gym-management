@@ -1,27 +1,57 @@
 import React, { Component } from "react";
-
 import { BrowserRouter as Router, Route } from "react-router-dom";
+
 import Layout from "./components/Layout";
 import Table from "./components/Table";
 import Statistic from "./components/Statistic";
-
 import EditingMember from "../src/components/EditingMember";
 import Payment from "./components/Payment";
-// import MembersList from "../src/components/Table";
-// import MembersList from "../src/components/Table";
-
-import "./App.css";
 import AddNewMember from "./components/AddNewMember";
+import { getdata } from "./helpers/HandleFirebase";
+import "./App.css";
 
 class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     members: []
-  //   };
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      members: [],
+      billsDay: []
+    };
+  }
+
+  async componentDidMount() {
+    let billsDay = await getdata(`billsDay`);
+    let members = await getdata(`members`);
+    this.setState({
+      members,
+      billsDay
+    });
+  }
+
+  handlingDateTime(dateTime) {
+    let index = dateTime.search("/");
+    var res = dateTime.substr(index + 1, 1);
+    return res;
+  }
+
+  statisticInMonth = state => {
+    let members = [];
+    members = state.filter(
+      mem =>
+        this.handlingDateTime(mem.createAt) === `${new Date().getMonth() + 1}`
+    );
+    return members;
+  };
+
+  totalMemPer = arrMem => {
+    const members = this.statisticInMonth(arrMem);
+    let percentRegis = (members.length / 100) * 100;
+    return percentRegis;
+  };
 
   render() {
+    const total = this.state.members;
+    const percent = this.totalMemPer(this.statisticInMonth(this.state.members));
     return (
       <Router>
         <Layout>
@@ -54,7 +84,7 @@ class App extends Component {
           <Route path="/PaymentDay" component={Detail} />
           <Route path="/PaymentMonth" component={Detail} /> */}
           {/*  */}
-          <Statistic />
+          <Statistic totalMem={total} percent={percent} />
         </Layout>
       </Router>
     );

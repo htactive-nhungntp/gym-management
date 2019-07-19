@@ -1,22 +1,58 @@
 import React, { Component } from "react";
 
-import { getdata } from "../../../helpers/HandleFirebase";
+import { callFirebase, getdata } from "../../../helpers/HandleFirebase";
 import TableButton from "../PaymentDay";
 
 export default class PaymentDay extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bills: []
+      bills: [],
+      newName: "",
+      newPhone: ""
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.loadData();
+  }
+
+  loadData = async () => {
     let bills = await getdata(`billsDay`);
     this.setState({
       bills
     });
-  }
+  };
+
+  addBill = () => {
+    let onData = callFirebase("billsDay");
+    let name = this.state.newName;
+    let phone = this.state.newPhone;
+    this.setState({
+      newName: "",
+      newPhone: ""
+    });
+    onData.push({
+      name,
+      phone,
+      createAt: new Date().toLocaleString()
+    });
+
+    this.loadData();
+  };
+
+  toggleChange = (event, stateName) => {
+    switch (stateName) {
+      case "newName":
+        this.setState({ newName: event.target.value });
+        break;
+      case "newPhone":
+        this.setState({ newPhone: event.target.value });
+        break;
+      default:
+        break;
+    }
+  };
 
   render() {
     const bills = this.state.bills;
@@ -26,13 +62,32 @@ export default class PaymentDay extends Component {
         <div className="form-group row">
           <label className="col-sm-1 col-form-label">Name</label>
           <div className="col-sm-4">
-            <input type="text" className="form-control" />
+            <input
+              type="text"
+              className="form-control"
+              onChange={e => {
+                this.toggleChange(e, "newName");
+              }}
+            />
           </div>
           <label className="col-sm-1 col-form-label">Phone</label>
           <div className="col-sm-4">
-            <input type="text" className="form-control" />
+            <input
+              type="text"
+              className="form-control"
+              onChange={e => {
+                this.toggleChange(e, "newPhone");
+              }}
+            />
           </div>
-          <button className="btn btn-large btn-info">Pay Now</button>
+          <button
+            className="btn btn-large btn-info"
+            onClick={() => {
+              this.addBill();
+            }}
+          >
+            Pay Now
+          </button>
         </div>
 
         <div className="sparkline12-list shadow-reset mg-t-30">
@@ -59,8 +114,8 @@ export default class PaymentDay extends Component {
                   <tr>
                     <th>#</th>
                     <th>Name</th>
-                    <th>Date pay</th>
                     <th>Phone</th>
+                    <th>Date pay</th>
                     <th>Options</th>
                   </tr>
                 </thead>

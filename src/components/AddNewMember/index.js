@@ -31,17 +31,11 @@ class AddNewMember extends React.Component {
 
     let onData = callFirebase(`members`);
     onData.push({
-      id: this.randomId(),
       name,
       address,
       phone,
       DOB,
-      createAt:
-        new Date().getDate() +
-        "-" +
-        (new Date().getMonth() + 1) +
-        "-" +
-        new Date().getFullYear()
+      createAt: new Date().toLocaleString()
     });
   }
 
