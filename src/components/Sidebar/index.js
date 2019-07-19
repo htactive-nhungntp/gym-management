@@ -10,7 +10,7 @@ const Sidebar = () => {
           <a href="/">
             <img src="img/message/1.jpg" alt="" />
           </a>
-          <h3>Andrar Son</h3>
+          <h3>Nhung Huong</h3>
           <p>Developer</p>
           <strong>AP+</strong>
         </div>
@@ -49,9 +49,7 @@ const Sidebar = () => {
                 role="menu"
                 className="dropdown-menu left-menu-dropdown animated flipInX"
               >
-                <a href="inbox.html" className="dropdown-item">
-                  Inbox
-                </a>
+               
                 <a href="view-mail.html" className="dropdown-item">
                   View Mail
                 </a>
@@ -61,19 +59,19 @@ const Sidebar = () => {
               </div>
             </li>
             <li className="nav-item">
-              <a
-                href="/"
+            <Link
+                to="/machine"
                 data-toggle="dropdown"
                 role="button"
                 aria-expanded="false"
                 className="nav-link dropdown-toggle"
               >
-                <i className="fa big-icon fa-flask" />{" "}
-                <span className="mini-dn">Interface</span>{" "}
+                <i className="fa big-icon fa-envelope" />{" "}
+                <span className="mini-dn">Machines</span>{" "}
                 <span className="indicator-right-menu mini-dn">
                   <i className="fa indicator-mn fa-angle-left" />
                 </span>
-              </a>
+              </Link>
               <div
                 role="menu"
                 className="dropdown-menu left-menu-dropdown animated flipInX"

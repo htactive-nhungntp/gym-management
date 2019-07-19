@@ -1,8 +1,11 @@
 import React from "react";
 
 import TableButton from "../Table/TableButton";
+
+import { addMem } from "../../Helpers/HandleFirebase";
 import { API_RANDOM } from "../../helpers/Api_url";
 import { callFirebase } from "../.././helpers/HandleFirebase";
+
 
 class AddNewMember extends React.Component {
   constructor(props) {
@@ -14,14 +17,6 @@ class AddNewMember extends React.Component {
       newDOB: ""
     };
   }
-
-  randomId = () => {
-    let text = "";
-    let possible = API_RANDOM;
-    for (let i = 0; i < 10; i++)
-      text += possible.charAt(Math.floor(Math.random() * possible.length));
-    return text;
-  };
 
   addMember() {
     const name = this.state.newName;
@@ -41,6 +36,7 @@ class AddNewMember extends React.Component {
 
   toggleChange = (event, stateName) => {
     switch (stateName) {
+
       case "newName":
         this.setState({ newName: event.target.value });
         break;
@@ -119,6 +115,7 @@ class AddNewMember extends React.Component {
           <div className="btn-edit">
             <TableButton to="/" content="Cancel" color="btn-danger" /> &nbsp;
             &nbsp;
+
             <button
               className="btn btn-large btn-success"
               onClick={() => this.addMember()}

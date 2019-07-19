@@ -4,11 +4,18 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Table from "./components/Table";
 import Statistic from "./components/Statistic";
+
+import Machine from "./components/Machines";
+import AddMachineBase from "./components/Form/FormMachine"
+import EditMachineBase from "./components/Form/FormMachine/EditMachine"
+
 import EditingMember from "../src/components/EditingMember";
 import Payment from "./components/Payment";
 import AddNewMember from "./components/AddNewMember";
 import { getdata } from "./helpers/HandleFirebase";
 import "./App.css";
+import AddNewMember from "./components/AddNewMember";
+
 
 class App extends Component {
   constructor(props) {
@@ -65,11 +72,25 @@ class App extends Component {
             path="/EditMember/:id"
             component={({ match }) => <EditingMember match={match} />}
           />
+
+          <Route
+            exact
+            path="/machine"
+            component={({ match }) => <Machine match={match} />}
+            />
+
           <Route exact path="/AddMember" component={() => <AddNewMember />} />
           <Route
             exact
             path="/DeleteMember/:id"
             component={({ match }) => <EditingMember match={match} />}
+          />
+
+
+           <Route
+            exact
+            path="/EditMachine/:id"
+            component={({ match }) => <EditMachineBase match={match} />}
           />
 
           <Route
@@ -78,13 +99,19 @@ class App extends Component {
             component={({ match }) => <Payment match={match} />}
           />
 
+
           {/* <Route path="/EditMember" component={MemberEditing} /> */}
           {/* <Route path="/DeleteMember" component={Detail} />
           <Route path="/AddMember" component={Detail} />
           <Route path="/PaymentDay" component={Detail} />
           <Route path="/PaymentMonth" component={Detail} /> */}
           {/*  */}
+
+          <Route exact path="/AddMachine" component={props => <AddMachineBase {...props} />} />
+          <Statistic />
+
           <Statistic totalMem={total} percent={percent} />
+
         </Layout>
       </Router>
     );

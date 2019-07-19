@@ -6,6 +6,7 @@ import TableRow from "./TableRow";
 import TableButton from "./TableButton";
 import { getdata, deleteData } from "../.././helpers/HandleFirebase";
 
+
 class Table extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +14,7 @@ class Table extends React.Component {
       members: []
     };
   }
+
 
   componentDidMount() {
     this.loadData();

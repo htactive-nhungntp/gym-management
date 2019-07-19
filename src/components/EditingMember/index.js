@@ -1,8 +1,8 @@
 import React from "react";
 
 import TableButton from "../Table/TableButton";
-
 import { getdata, callFirebase } from "../.././helpers/HandleFirebase";
+
 
 class EditingMember extends React.Component {
   constructor(props) {
@@ -61,6 +61,7 @@ class EditingMember extends React.Component {
   };
 
   render() {
+    console.log(this.state.updateAddress);
     return (
       <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
         <div className="col-xs-1 col-sm-1 col-md-1 col-lg-1" />
