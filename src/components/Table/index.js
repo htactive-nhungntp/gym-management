@@ -1,8 +1,7 @@
 import React from "react";
-
 import firebase from "firebase";
 
-import {Swaling} from "../../Helpers/afterActions"
+import { Swaling } from "../../Helpers/afterActions";
 import firebaseConfig from "../../ConfigFirebase";
 import TableRow from "./TableRow";
 import TableButton from "./TableButton";
@@ -29,8 +28,8 @@ class Table extends React.Component {
 
   
   deleteMember = async key => {
-    let comfirm = window.confirm('Are you sure you wish to delete this item?');
-    if(comfirm){
+    let comfirm = window.confirm("Are you sure you wish to delete this item?");
+    if (comfirm) {
       let onData = deleteData(key);
       onData.remove();
       Swaling("Information deleted !");
