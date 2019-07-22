@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+// import {Swal} from " sweetalert2 "
 
-import { callFirebase, getdata } from "../../../Helpers/HandleFirebase";
+import { callFirebase, getdata, deleteData } from "../../../Helpers/HandleFirebase";
 import TableButton from "../PaymentDay";
+import {Swaling} from "../../../Helpers/afterActions"
+
 
 export default class PaymentDay extends Component {
   constructor(props) {
@@ -37,9 +40,20 @@ export default class PaymentDay extends Component {
       phone,
       createAt: new Date().toLocaleString()
     });
-
+    Swaling("Information Added !");
     this.loadData();
   };
+
+
+  deleteBill = (id) => {
+    let comfirm = window.confirm('Are you sure you wish to delete this item?');
+    if(comfirm){
+      let onData = deleteData(`billsDay/${id}`);
+      onData.remove();
+      Swaling("Information deleted !");
+      this.loadData();
+    }
+  }
 
   toggleChange = (event, stateName) => {
     switch (stateName) {
@@ -55,7 +69,7 @@ export default class PaymentDay extends Component {
   };
 
   render() {
-    const bills = this.state.bills;
+    const {bills} = this.state;
     let count = 0;
     return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -133,7 +147,7 @@ export default class PaymentDay extends Component {
                           Update
                         </button>
                         &nbsp; &nbsp;
-                        <button className="btn btn-large btn-danger">
+                        <button className="btn btn-large btn-danger" onClick = {()=>this.deleteBill(bill.id)}>
                           Delete
                         </button>
                       </td>
