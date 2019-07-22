@@ -1,10 +1,9 @@
 import React from "react";
+import validator from "validator";
 
 import TableButton from "../Table/TableButton";
-
-// import { addMem } from "../../Helpers/HandleFirebase";
-// import { API_RANDOM } from "../../helpers/Api_url";
-import { callFirebase } from "../.././Helpers/HandleFirebase";
+import { getdata, callFirebase } from "../.././Helpers/HandleFirebase";
+import { Swaling, Warning } from "../../Helpers/afterActions";
 
 class AddNewMember extends React.Component {
   constructor(props) {
@@ -13,50 +12,115 @@ class AddNewMember extends React.Component {
       newName: "",
       newAddress: "",
       newPhone: "",
-      newDOB: ""
+      newDOB: "",
+      formErrors: { newName: "", newPhone: "", newAddress: "" },
+      newNameValid: "",
+      newPhoneValid: "",
+      newAddressValid: "",
+      formValid: ""
     };
   }
 
-  addMember() {
-    const name = this.state.newName;
-    const address = this.state.newAddress;
-    const phone = this.state.newPhone;
-    const DOB = this.state.newDOB;
+  errorClass(error) {
+    return error.length === 0 ? "" : error;
+  }
 
-    let onData = callFirebase(`members`);
-    onData.push({
-      name,
-      address,
-      phone,
-      DOB,
-      createAt: new Date().toLocaleString()
-    });
-
+  componentDidMount() {
     this.setState({
-      newName: "",
-      newAddress: "",
-      newPhone: "",
-      newDOB: ""
+      newNameValid: false,
+      newPhoneValid: false,
+      newAddressValid: false,
+      formValid: false
     });
   }
 
-  toggleChange = (event, stateName) => {
-    switch (stateName) {
+  addMember = async () => {
+    if (this.state.formValid) {
+      const name = this.state.newName;
+      const address = this.state.newAddress;
+      const phone = this.state.newPhone;
+      const DOB = this.state.newDOB;
+      const members = await getdata("members");
+      let mem = members.some(mem => mem.phone === phone);
+      console.log("already: ", mem);
+      if (!mem) {
+        let onData = callFirebase(`members`);
+        onData.push({
+          name,
+          address,
+          phone,
+          DOB,
+          createAt: new Date().toLocaleString()
+        });
+        Swaling("Infpomation Added !");
+        this.setState({
+          newName: "",
+          newAddress: "",
+          newPhone: "",
+          newDOB: ""
+        });
+      } else {
+        Warning("The phone is already registered !");
+      }
+    } else {
+      Warning("Infomations are not saved !");
+    }
+  };
+
+  validateField = (fieldName, value) => {
+    let fieldValidationErrors = this.state.formErrors;
+    let newPhoneValid = this.state.newPhoneValid;
+    let newNameValid = this.state.newNameValid;
+    let newAddressValid = this.state.newAddressValid;
+    switch (fieldName) {
       case "newName":
-        this.setState({ newName: event.target.value });
+        newNameValid = value.match(/([\D])$/i) && value.length >= 2;
+        fieldValidationErrors.newName = newNameValid
+          ? ""
+          : " Does not contain numbers and must be longer than 2 characters !";
         break;
       case "newAddress":
-        this.setState({ newAddress: event.target.value });
+        newAddressValid = value.length >= 5;
+        fieldValidationErrors.newAddress = newAddressValid
+          ? ""
+          : " Must be longer than 5 characters !";
         break;
       case "newPhone":
-        this.setState({ newPhone: event.target.value });
-        break;
-      case "newDOB":
-        this.setState({ newDOB: event.target.value });
+        newPhoneValid = validator.isMobilePhone(value);
+        fieldValidationErrors.newPhone = newPhoneValid
+          ? ""
+          : " The phone number is not right !";
         break;
       default:
         break;
     }
+    this.setState(
+      {
+        formErrors: fieldValidationErrors,
+        newPhoneValid: newPhoneValid,
+        newNameValid: newNameValid,
+        newAddressValid: newAddressValid
+      },
+      this.validateForm
+    );
+  };
+
+  validateForm = () => {
+    this.setState({
+      formValid:
+        this.state.newPhoneValid &&
+        this.state.newNameValid &&
+        this.state.newAddressValid
+    });
+  };
+
+  toggleChange = event => {
+    var target = event.target;
+    var name = target.name;
+    var value = target.value;
+    this.setState({ [name]: value }, () => {
+      this.validateField(name, value);
+    });
   };
 
   render() {
@@ -66,15 +130,21 @@ class AddNewMember extends React.Component {
 
         <div className="col-xs-10 col-sm-10 col-md-10 col-lg-10">
           <div className="form-group row">
-            <h2>Update</h2>
+            <h2>Add New Member</h2>
           </div>
           <div className="form-group row">
             <label className="col-sm-2 col-form-label">Name</label>
             <div className="col-sm-10">
+              <span className="has-error">
+                {" "}
+                {this.errorClass(this.state.formErrors.newName)}{" "}
+              </span>
               <input
+                required
                 type="text"
-                className="form-control"
-                onChange={e => this.toggleChange(e, "newName")}
+                className={`form-control`}
+                onChange={this.toggleChange}
+                name="newName"
                 value={this.state.newName}
               />
             </div>
@@ -82,10 +152,16 @@ class AddNewMember extends React.Component {
           <div className="form-group row">
             <label className="col-sm-2 col-form-label">Address</label>
             <div className="col-sm-10">
+              <span className="has-error">
+                {" "}
+                {this.errorClass(this.state.formErrors.newAddress)}{" "}
+              </span>
               <input
+                required
                 type="text"
-                className="form-control"
-                onChange={e => this.toggleChange(e, "newAddress")}
+                className={`form-control`}
+                onChange={this.toggleChange}
+                name="newAddress"
                 value={this.state.newAddress}
               />
             </div>
@@ -95,10 +171,16 @@ class AddNewMember extends React.Component {
               phone
             </label>
             <div className="col-sm-10">
+              <span className="has-error">
+                {" "}
+                {this.errorClass(this.state.formErrors.newPhone)}{" "}
+              </span>
               <input
+                required
                 type="text"
-                className="form-control"
-                onChange={e => this.toggleChange(e, "newPhone")}
+                className={`form-control `}
+                name="newPhone"
+                onChange={this.toggleChange}
                 value={this.state.newPhone}
               />
             </div>
@@ -109,9 +191,11 @@ class AddNewMember extends React.Component {
             </label>
             <div className="col-sm-10">
               <input
+                required
                 type="date"
                 className="form-control"
-                onChange={e => this.toggleChange(e, "newDOB")}
+                name="newDOB"
+                onChange={this.toggleChange}
                 value={this.state.newDOB}
               />
             </div>
