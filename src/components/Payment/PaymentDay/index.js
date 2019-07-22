@@ -46,6 +46,7 @@ export default class PaymentDay extends Component {
     this.loadData();
   };
 
+
   deleteBill = id => {
     let comfirm = window.confirm("Are you sure you wish to delete this item?");
     if (comfirm) {
@@ -55,6 +56,7 @@ export default class PaymentDay extends Component {
       this.loadData();
     }
   };
+
 
   toggleChange = (event, stateName) => {
     switch (stateName) {

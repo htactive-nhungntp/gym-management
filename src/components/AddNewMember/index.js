@@ -1,6 +1,5 @@
 import React from "react";
 import validator from "validator";
-
 import TableButton from "../Table/TableButton";
 import { getdata, callFirebase } from "../.././Helpers/HandleFirebase";
 import { Swaling, Warning } from "../../Helpers/afterActions";
@@ -93,7 +92,51 @@ class AddNewMember extends React.Component {
         break;
       default:
         break;
+
+  addMember() {
+    if(this.state.formValid){
+      const name = this.state.newName;
+      const address = this.state.newAddress;
+      const phone = this.state.newPhone;
+      const DOB = this.state.newDOB;
+      let onData = callFirebase(`members`);
+      onData.push({
+        name,
+        address,
+        phone,
+        DOB,
+        createAt: new Date().toLocaleString()
+      });
+      Swaling("Infpomation Added !");
+      this.setState({
+        newName: "",
+        newAddress: "",
+        newPhone: "",
+        newDOB: ""
+      });
+    }else{
+      Warning("Infomations are saved !");
     }
+  }
+
+  validateField(fieldName, value) {
+    let fieldValidationErrors = this.state.formErrors;
+    let newPhoneValid = this.state.newPhoneValid;
+    let newNameValid = this.state.newNameValid;
+    switch (fieldName) {
+        case "newName":
+          newNameValid = value.match(/([\D])$/i) && value.length >= 2;
+            fieldValidationErrors.newName = newNameValid ? "" : " Does not contain numbers and must be longer than 2 characters";
+            break;
+        case "newPhone":
+            newPhoneValid = validator.isMobilePhone(value);
+            fieldValidationErrors.newPhone = newPhoneValid ? "" : " The phone number is not right !";
+            break;
+        default:
+            break;
+
+    }
+
     this.setState(
       {
         formErrors: fieldValidationErrors,
