@@ -13,7 +13,7 @@ import AddNewMember from "./components/AddNewMember";
 import { getdata } from "./Helpers/HandleFirebase";
 import "./App.css";
 
-import AdminProfile from "./components/AdminProfile";
+import AdminProfileBase from "./components/AdminProfile";
 
 
 class App extends Component {
@@ -81,7 +81,7 @@ class App extends Component {
           <Route
             exact
             path="/profile"
-            component={({ match }) => <AdminProfile match={match} />}
+            component={({ match }) => <AdminProfileBase match={match} />}
           />
 
           <Route exact path="/AddMember" component={() => <AddNewMember />} />

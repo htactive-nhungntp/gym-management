@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 
-import { callFirebase, getdata } from "../../../Helpers/HandleFirebase";
 
-import { callFirebase, getdata, deleteData } from "../../../Helpers/HandleFirebase";
-import TableButton from "../PaymentDay";
 import {Swaling} from "../../../Helpers/afterActions"
-
+import {
+  callFirebase,
+  getdata,
+  deleteData
+} from "../../../Helpers/HandleFirebase";
 
 export default class PaymentDay extends Component {
   constructor(props) {
