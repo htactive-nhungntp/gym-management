@@ -4,7 +4,7 @@ export const Statistic = props => {
   let day = new Date();
   let date = day.getMonth() + 1 + "-" + day.getFullYear();
   return (
-    <div className="col-lg-3 col-md-6 col-sm-12 col-xs-12">
+    <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
       <div className="income-dashone-total income-monthly shadow-reset nt-mg-b-30 res-mg-t-30">
         <div className="income-title">
           <div className="main-income-head">

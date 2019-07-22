@@ -2,8 +2,12 @@ import React from "react";
 import validator from 'validator' 
 
 import TableButton from "../Table/TableButton";
+
+import { callFirebase } from "../.././Helpers/HandleFirebase";
+
 import { callFirebase } from "../.././Helpers/HandleFirebase";
 import {Swaling, Warning} from "../../Helpers/afterActions"
+
 
 class AddNewMember extends React.Component {
   constructor(props) {
@@ -30,7 +34,31 @@ class AddNewMember extends React.Component {
       newPhoneValid: false,
       formValid: false
     });
+
+    this.setState({
+      newName: "",
+      newAddress: "",
+      newPhone: "",
+      newDOB: ""
+    });
   }
+
+  toggleChange = (event, stateName) => {
+    switch (stateName) {
+      case "newName":
+        this.setState({ newName: event.target.value });
+        break;
+      case "newAddress":
+        this.setState({ newAddress: event.target.value });
+        break;
+      case "newPhone":
+        this.setState({ newPhone: event.target.value });
+        break;
+      case "newDOB":
+        this.setState({ newDOB: event.target.value });
+        break;
+      default:
+        break;
 
   addMember() {
     if(this.state.formValid){
@@ -73,6 +101,7 @@ class AddNewMember extends React.Component {
             break;
         default:
             break;
+
     }
 
     this.setState(

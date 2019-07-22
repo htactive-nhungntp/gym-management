@@ -4166,3 +4166,20 @@ div#sparklinedask2, div#sparklinedask1 {
 .materialdesign .breadcome-heading .form-control:-moz-placeholder { /* Firefox 18- */
   color: #fff;
 }
+.unresize {
+	resize: none;
+}
+.personal-info .avatar {
+	width: 6.25rem;
+	height: 6.25rem;
+}
+.personal-info input[type="file"] {
+    display: none;
+}
+.personal-info .custom-file-upload {
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 10px;
+    background: #f1b050;
+}

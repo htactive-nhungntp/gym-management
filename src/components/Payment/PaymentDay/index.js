@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-// import {Swal} from " sweetalert2 "
+
+import { callFirebase, getdata } from "../../../Helpers/HandleFirebase";
 
 import { callFirebase, getdata, deleteData } from "../../../Helpers/HandleFirebase";
 import TableButton from "../PaymentDay";

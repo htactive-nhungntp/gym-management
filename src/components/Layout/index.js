@@ -14,7 +14,7 @@ const Layout = props => {
         <Header />
         <Breadcrumb />
         <BreadcrumbMobile />
-        <div className="container-fluid mg-b-40 mg-t-30">{props.children}</div>
+        <div className="container-fluid mg-b-40 mg-t-30 flex-wrap justify-content-center">{props.children}</div>
       </div>
 
       <Footer />
