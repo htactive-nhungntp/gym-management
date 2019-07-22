@@ -50,7 +50,7 @@ export default class TableMachine extends Component {
     );
     return (
       <div>
-      <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+        <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
           <TableButton
             color="btn-success"
             content="Add New Machine"

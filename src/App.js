@@ -12,7 +12,9 @@ import Payment from "./components/Payment";
 import AddNewMember from "./components/AddNewMember";
 import { getdata } from "./Helpers/HandleFirebase";
 import "./App.css";
+
 import AdminProfile from "./components/AdminProfile";
+
 
 class App extends Component {
   constructor(props) {
@@ -75,11 +77,13 @@ class App extends Component {
             path="/machine"
             component={({ match }) => <Machine match={match} />}
           />
+
           <Route
             exact
             path="/profile"
             component={({ match }) => <AdminProfile match={match} />}
           />
+
           <Route exact path="/AddMember" component={() => <AddNewMember />} />
           <Route
             exact
