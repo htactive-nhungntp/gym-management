@@ -8,6 +8,7 @@ import "./payment.css";
 
 export default class index extends Component {
  
+
   render() {
     return (
       <Router>

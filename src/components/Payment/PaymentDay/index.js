@@ -64,6 +64,7 @@ export default class PaymentDay extends Component {
             <input
               type="text"
               className="form-control"
+              value={this.state.newName}
               onChange={e => {
                 this.toggleChange(e, "newName");
               }}
@@ -74,6 +75,7 @@ export default class PaymentDay extends Component {
             <input
               type="text"
               className="form-control"
+              value={this.state.newPhone}
               onChange={e => {
                 this.toggleChange(e, "newPhone");
               }}

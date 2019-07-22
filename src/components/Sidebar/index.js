@@ -103,19 +103,19 @@ const Sidebar = () => {
               </div>
             </li>
             <li className="nav-item">
-              <a
-                href="/"
+            <Link
+                to="/profile"
                 data-toggle="dropdown"
                 role="button"
                 aria-expanded="false"
                 className="nav-link dropdown-toggle"
               >
-                <i className="fa big-icon fa-pie-chart" />{" "}
-                <span className="mini-dn">Miscellaneous</span>{" "}
+                <i className="fa big-icon fa-envelope" />{" "}
+                <span className="mini-dn">Admin Profile</span>{" "}
                 <span className="indicator-right-menu mini-dn">
                   <i className="fa indicator-mn fa-angle-left" />
                 </span>
-              </a>
+              </Link>
               <div
                 role="menu"
                 className="dropdown-menu left-menu-dropdown animated flipInX"

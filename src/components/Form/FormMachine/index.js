@@ -13,9 +13,8 @@ class AddMachineBase extends Component {
       status: " ",
       img: null,
       url: "",
-      type_id:" "
+      type_id: " "
     };
-    console.log("id ",props);
   }
 
   toggleChange = (event, stateName) => {
@@ -46,7 +45,6 @@ class AddMachineBase extends Component {
   handleImage = e => {
     if (e.target.files[0]) {
       const image = e.target.files[0];
-      console.log("image: ", image);
       this.setState(
         () => ({ img: image }),
         () => console.log("state image: ", this.state.img)
@@ -85,7 +83,6 @@ class AddMachineBase extends Component {
   };
 
   render() {
-    console.log(this.props, "props");
     return (
       <div>
         <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">

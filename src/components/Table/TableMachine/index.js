@@ -7,48 +7,55 @@ export default class TableMachine extends Component {
 
     this.state = {
       data: props.machines
-      
     };
   }
-  
-  deleteMachines = (id) => {
-    this.props.deleteMachine(id)
+
+  deleteMachines = id => {
+    this.props.deleteMachine(id);
   };
   render() {
-    let count=0
-    let listType = this.props.machines.map(({id, name, type_id, image, status}) => {
-      console.log("mc.type", type_id);
-      console.log("list type: ", this.props.types)
-      let type = this.props.types.find(tp => tp.id === type_id );
-      return (<tr key={id}>
-        <td>{++count}</td>
-        <td>{name}</td>
-        <td>{type.type}</td>
-        <td>
-          <img src={image} alt="" width={60} height={70} />
-        </td>
-        <td>{status}</td>
-       
-        <td>
-          <TableButton
-            color="btn-warning"
-            content="Edit"
-            pathName={`/EditMachine/${id}`}
-            id={id}
-          />
-          &nbsp; &nbsp;
-          <button className=" btn btn-large btn-danger" onClick={()=> this.deleteMachines(`${id}`)} > Delete</button>
-        </td>
-      </tr>)
-    })
+    let count = 0;
+    let listType = this.props.machines.map(
+      ({ id, name, type_id, image, status }) => {
+        let type = this.props.types.find(tp => tp.id === type_id);
+        return (
+          <tr key={id}>
+            <td>{++count}</td>
+            <td>{name}</td>
+            <td>{type.type}</td>
+            <td>
+              <img src={image} alt="" width={60} height={70} />
+            </td>
+            <td>{status}</td>
+
+            <td>
+              <TableButton
+                color="btn-warning"
+                content="Edit"
+                pathName={`/EditMachine/${id}`}
+                id={id}
+              />
+              &nbsp; &nbsp;
+              <button
+                className=" btn btn-large btn-danger"
+                onClick={() => this.deleteMachines(`${id}`)}
+              >
+                {" "}
+                Delete
+              </button>
+            </td>
+          </tr>
+        );
+      }
+    );
     return (
       <div>
-        <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-        <TableButton
-          color="btn-success"
-          content="Add New Machine"
-          pathName={`/AddMachine`}
-        />
+      <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+          <TableButton
+            color="btn-success"
+            content="Add New Machine"
+            pathName={`/AddMachine`}
+          />
           <div className="sparkline12-list shadow-reset mg-t-30">
             <div className="sparkline12-hd">
               <div className="main-sparkline12-hd">
@@ -79,9 +86,7 @@ export default class TableMachine extends Component {
                       <th>Options</th>
                     </tr>
                   </thead>
-                  <tbody>
-                   {listType}
-                  </tbody>
+                  <tbody>{listType}</tbody>
                 </table>
               </div>
             </div>

@@ -26,25 +26,23 @@ class Firebase {
     let onData = firebase.database().ref(tableName);
     return onData;
   };
-  
- getdata = async tableName => {
+
+  getdata = async tableName => {
     const database = this.callFirebase(tableName);
     const snapshot = await database.once("value");
     const data = snapshot.val();
-    if (data){
+    if (data) {
       return Object.entries(data).map(d => ({
         ...d[1],
         id: d[0]
       }));
-    }else{
+    } else {
       return [];
     }
   };
   addMachines = () => this.db.ref("machines");
   // editMachines = index => this.db.ref(`machines/${index}`);
-   deleteMachines = index => this.db.ref(`machines/${index}`);
+  deleteMachines = index => this.db.ref(`machines/${index}`);
 }
-
-console.log("Firebase", firebase.db);
 
 export default Firebase;
