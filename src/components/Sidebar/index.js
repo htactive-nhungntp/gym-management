@@ -95,7 +95,6 @@ class SidebarBase extends React.Component{
               </Link>
             </li>
             <li className="nav-item">
-              <Link
                 to="/profile"
                 data-toggle="dropdown"
                 role="button"
@@ -110,8 +109,8 @@ class SidebarBase extends React.Component{
               </Link>
             </li>
             <li className="nav-item">
-              <a
-                href="/"
+               <Link
+                to="/Statistic"
                 data-toggle="dropdown"
                 role="button"
                 aria-expanded="false"
@@ -122,7 +121,7 @@ class SidebarBase extends React.Component{
                 <span className="indicator-right-menu mini-dn">
                   <i className="fa indicator-mn fa-angle-left" />
                 </span>
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <a
@@ -165,6 +164,7 @@ class SidebarBase extends React.Component{
                 </span>
               </a>
             </li>
+
             <li className="nav-item">
               <a
                 href="/"

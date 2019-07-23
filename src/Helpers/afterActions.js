@@ -17,6 +17,7 @@ export const Warning = (text) => {
       
 }
 
+
 // export const swalWithBootstrapButtons = Swal.mixin({
 //     customClass: {
 //       confirmButton: 'btn btn-success',
@@ -24,7 +25,7 @@ export const Warning = (text) => {
 //     },
 //     buttonsStyling: false,
 //   })
-  
+
 //   swalWithBootstrapButtons.fire({
 //     title: 'Are you sure?',
 //     text: "You won't be able to revert this!",
@@ -50,4 +51,4 @@ export const Warning = (text) => {
 //         'error'
 //       )
 //     }
-//   })
+

@@ -3,11 +3,9 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import PaymentDay from "./PaymentDay";
 import PaymentMonth from "./PaymentMonth";
-
 import "./payment.css";
 
 export default class index extends Component {
- 
 
   render() {
     return (
