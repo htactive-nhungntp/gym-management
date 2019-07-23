@@ -1,16 +1,22 @@
-import Swal from "sweetalert2";
+import Swal from 'sweetalert2';
 
-export const Swaling = text => {
-  Swal.fire(`${text}`, "The changes were saved correctly.", "success");
-};
+export const Swaling = (text) => {
+    Swal.fire(
+        `${text}`,
+        'The changes were saved correctly.',
+        'success')
+}
 
-export const Warning = text => {
-  Swal.fire({
-    type: "error",
-    title: `${text}`,
-    text: "Something went wrong!"
-  });
-};
+
+export const Warning = (text) => {
+    Swal.fire({
+        type: 'error',
+        title: `${text}`,
+        text: 'Something went wrong!',
+      })
+      
+}
+
 
 // export const swalWithBootstrapButtons = Swal.mixin({
 //     customClass: {
@@ -45,4 +51,4 @@ export const Warning = text => {
 //         'error'
 //       )
 //     }
-//   })
+

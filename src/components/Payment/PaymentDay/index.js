@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 // import {Swal} from " sweetalert2 "
-
 import {
   callFirebase,
   getdata,
   deleteData
 } from "../../../Helpers/HandleFirebase";
+
 import { Swaling } from "../../../Helpers/afterActions";
 
 export default class PaymentDay extends Component {
@@ -56,6 +56,7 @@ export default class PaymentDay extends Component {
     }
   };
 
+
   toggleChange = (event, stateName) => {
     switch (stateName) {
       case "newName":
@@ -71,7 +72,6 @@ export default class PaymentDay extends Component {
 
   render() {
     const { bills } = this.state;
-    console.log("bilssss ne: ", bills);
     let count = 0;
     return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -153,6 +153,7 @@ export default class PaymentDay extends Component {
                           className="btn btn-large btn-danger"
                           onClick={() => this.deleteBill(bill.id)}
                         >
+
                           Delete
                         </button>
                       </td>
