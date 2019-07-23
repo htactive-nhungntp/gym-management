@@ -3670,7 +3670,8 @@ ul.profile-contact-menu {
 }
 .sidebar-header img {
    border-radius:50%;
-   width:50%;
+   width: 115px;
+   height: 108px;
 }
 #sidebar.active .sidebar-header img{
 	display:none;
@@ -4183,3 +4184,4 @@ div#sparklinedask2, div#sparklinedask1 {
     border-radius: 10px;
     background: #f1b050;
 }
+

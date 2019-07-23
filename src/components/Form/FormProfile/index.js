@@ -53,24 +53,32 @@ class FormProfileBase extends Component {
         updateEmail: data[0].email,
         updateUserName: data[0].user_name,
         updatePassword: data[0].password,
-        img: this.state.avatar
+        img: data[0].avatar
     });
-    console.log(this.state.updateAddress,"update");
   };
   
   updateInfor= url => {
     this.props.firebase
-      .callFirebase(`acount/${this.state.user.id}`)
+      .callFirebase(`acount/${1}`)
       .set({
         full_name:this.state.updateFullName,
         address: this.state.updateAddress,
         email: this.state.updateEmail,
         user_name: this.state.updateUserName,
         password: this.state.updatePassword,
-        img: url,     
+        avatar: url,     
       });
   };
-
+ 
+   reset =()=>{
+     this.setState({
+      updateFullName:"",
+      updateAddress:"",
+      updateEmail: "",
+      updateUserName: "",
+      updatePassword: "",
+     });
+   };
   handleImage = e => {
     if (e.target.files[0]) {
       const image = e.target.files[0];
@@ -120,14 +128,17 @@ class FormProfileBase extends Component {
         <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 mx-auto personal-info">
           <h1 className="text-center">Admin Profile</h1>
           <hr />
-          <div className="row">
-            <div className="text-center col-12 col-md-3">
+        
+            <div className="text-center col-md-3">
+              <div className="profile-img">
               <img
-                src={this.state.image}
+                src={this.state.img}
                 className="avatar img-circle  my-2"
                 alt="avatar"
                 onChange={e => this.toggleChange(e, "updateImage")}
               />
+              </div>
+              <div className="file-input">
               <label htmlFor="file-upload" className="custom-file-upload">
                 <i className="fa fa-cloud-upload" /> Upload
               </label>
@@ -137,6 +148,8 @@ class FormProfileBase extends Component {
               onChange={this.handleImage} 
              
                />
+              </div>
+              
               
             </div>
             <div className="col-md-9 mt-3">
@@ -226,18 +239,20 @@ class FormProfileBase extends Component {
                       type="button"
                       className="btn btn-primary"
                       defaultValue="Save Changes"
+                      onClick={e => this.handleUpload(e)}
                     />
                     <span />
                     <input
-                      type="reset"
+                      type="button"
                       className="btn btn-danger ml-3"
                       defaultValue="Cancel"
+                      onClick={this.reset}
                     />
                   </div>
                 </div>
               </form>
             </div>
-          </div>
+          
         </div>
       </div>
     )
