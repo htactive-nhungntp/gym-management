@@ -45,67 +45,11 @@ export default class PaymentMonth extends Component {
     let origin = await getdata("billsMonth");
     let month = this.state.month;
     switch (month) {
-      case "1":
+      case month:
         this.setState({
-          originbills: origin.filter(bill => bill.month === "1")
+          originbills: origin.filter(bill => bill.month === month)
         });
         break;
-      case "2":
-        this.setState({
-          originbills: origin.filter(bill => bill.month === "2")
-        });
-        break;
-      case "3":
-        this.setState({
-          originbills: origin.filter(bill => bill.month === "3")
-        });
-        break;
-      case "4":
-        this.setState({
-          originbills: origin.filter(bill => bill.month === "4")
-        });
-        break;
-      case "5":
-        this.setState({
-          originbills: origin.filter(bill => bill.month === "5")
-        });
-        break;
-      case "6":
-        this.setState({
-          originbills: origin.filter(bill => bill.month === "6")
-        });
-        break;
-      case "7":
-        this.setState({
-          originbills: origin.filter(bill => bill.month === "7")
-        });
-        break;
-      case "8":
-        this.setState({
-          originbills: origin.filter(bill => bill.month === "8")
-        });
-        break;
-      case "9":
-        this.setState({
-          originbills: origin.filter(bill => bill.month === "9")
-        });
-        break;
-      case "10":
-        this.setState({
-          originbills: origin.filter(bill => bill.month === "10")
-        });
-        break;
-      case "11":
-        this.setState({
-          originbills: origin.filter(bill => bill.month === "11")
-        });
-        break;
-      case "12":
-        this.setState({
-          originbills: origin.filter(bill => bill.month === "12")
-        });
-        break;
-
       default:
         this.setState({
           originbills: origin

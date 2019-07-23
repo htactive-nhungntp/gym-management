@@ -9,6 +9,7 @@ import AddMachineBase from "./components/Form/FormMachine";
 import EditMachineBase from "./components/Form/FormMachine/EditMachine";
 import EditingMember from "../src/components/EditingMember";
 import Payment from "./components/Payment";
+import StatisticYear from "./components/TotalYear";
 import AddNewMember from "./components/AddNewMember";
 import { getdata } from "./Helpers/HandleFirebase";
 import "./App.css";
@@ -86,6 +87,12 @@ class App extends Component {
             exact
             path="/EditMachine/:id"
             component={({ match }) => <EditMachineBase match={match} />}
+          />
+
+          <Route
+            exact
+            path="/Statistic"
+            component={({ match }) => <StatisticYear match={match} />}
           />
 
           <Route

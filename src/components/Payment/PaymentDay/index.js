@@ -71,6 +71,7 @@ export default class PaymentDay extends Component {
 
   render() {
     const { bills } = this.state;
+    console.log("bilssss ne: ", bills);
     let count = 0;
     return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">

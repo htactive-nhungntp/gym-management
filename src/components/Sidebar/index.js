@@ -49,7 +49,6 @@ const Sidebar = () => {
                 role="menu"
                 className="dropdown-menu left-menu-dropdown animated flipInX"
               >
-               
                 <a href="view-mail.html" className="dropdown-item">
                   View Mail
                 </a>
@@ -59,7 +58,7 @@ const Sidebar = () => {
               </div>
             </li>
             <li className="nav-item">
-            <Link
+              <Link
                 to="/machine"
                 data-toggle="dropdown"
                 role="button"
@@ -72,74 +71,10 @@ const Sidebar = () => {
                   <i className="fa indicator-mn fa-angle-left" />
                 </span>
               </Link>
-              <div
-                role="menu"
-                className="dropdown-menu left-menu-dropdown animated flipInX"
-              >
-                <a href="google-map.html" className="dropdown-item">
-                  Google Map
-                </a>
-                <a href="data-maps.html" className="dropdown-item">
-                  Data Maps
-                </a>
-                <a href="pdf-viewer.html" className="dropdown-item">
-                  Pdf Viewer
-                </a>
-                <a href="x-editable.html" className="dropdown-item">
-                  X-Editable
-                </a>
-                <a href="code-editor.html" className="dropdown-item">
-                  Code Editor
-                </a>
-                <a href="tree-view.html" className="dropdown-item">
-                  Tree View
-                </a>
-                <a href="preloader.html" className="dropdown-item">
-                  Preloader
-                </a>
-                <a href="images-cropper.html" className="dropdown-item">
-                  Images Cropper
-                </a>
-              </div>
             </li>
             <li className="nav-item">
-              <a
-                href="/"
-                data-toggle="dropdown"
-                role="button"
-                aria-expanded="false"
-                className="nav-link dropdown-toggle"
-              >
-                <i className="fa big-icon fa-pie-chart" />{" "}
-                <span className="mini-dn">Miscellaneous</span>{" "}
-                <span className="indicator-right-menu mini-dn">
-                  <i className="fa indicator-mn fa-angle-left" />
-                </span>
-              </a>
-              <div
-                role="menu"
-                className="dropdown-menu left-menu-dropdown animated flipInX"
-              >
-                <a href="profile.html" className="dropdown-item">
-                  Profile
-                </a>
-                <a href="contact-client.html" className="dropdown-item">
-                  Contact Client
-                </a>
-                <a href="contact-client-v.1.html" className="dropdown-item">
-                  Contact Client v.1
-                </a>
-                <a href="project-list.html" className="dropdown-item">
-                  Project List
-                </a>
-                <a href="project-details.html" className="dropdown-item">
-                  Project Details
-                </a>
-              </div>
-            </li>
-            <li className="nav-item">
-              <a
-                href="/"
+              <Link
+                to="/Statistic"
                 data-toggle="dropdown"
                 role="button"
                 aria-expanded="false"
@@ -150,98 +85,9 @@ const Sidebar = () => {
                 <span className="indicator-right-menu mini-dn">
                   <i className="fa indicator-mn fa-angle-left" />
                 </span>
-              </a>
-              <div
-                role="menu"
-                className="dropdown-menu left-menu-dropdown chart-left-menu-std animated flipInX"
-              >
-                <a href="bar-charts.html" className="dropdown-item">
-                  Bar Charts
-                </a>
-                <a href="line-charts.html" className="dropdown-item">
-                  Line Charts
-                </a>
-                <a href="area-charts.html" className="dropdown-item">
-                  Area Charts
-                </a>
-                <a href="rounded-chart.html" className="dropdown-item">
-                  Rounded Charts
-                </a>
-                <a href="c3.html" className="dropdown-item">
-                  C3 Charts
-                </a>
-                <a href="sparkline.html" className="dropdown-item">
-                  Sparkline Charts
-                </a>
-                <a href="peity.html" className="dropdown-item">
-                  Peity Charts
-                </a>
-              </div>
+              </Link>
             </li>
-            <li className="nav-item">
-              <a
-                href="/"
-                data-toggle="dropdown"
-                role="button"
-                aria-expanded="false"
-                className="nav-link dropdown-toggle"
-              >
-                <i className="fa big-icon fa-table" />{" "}
-                <span className="mini-dn">Data Tables</span>{" "}
-                <span className="indicator-right-menu mini-dn">
-                  <i className="fa indicator-mn fa-angle-left" />
-                </span>
-              </a>
-              <div
-                role="menu"
-                className="dropdown-menu left-menu-dropdown animated flipInX"
-              >
-                <a href="static-table.html" className="dropdown-item">
-                  Static Table
-                </a>
-                <a href="data-table.html" className="dropdown-item">
-                  Data Table
-                </a>
-              </div>
-            </li>
-            <li className="nav-item">
-              <a
-                href="/"
-                data-toggle="dropdown"
-                role="button"
-                aria-expanded="false"
-                className="nav-link dropdown-toggle"
-              >
-                <i className="fa big-icon fa-edit" />{" "}
-                <span className="mini-dn">Forms Elements</span>{" "}
-                <span className="indicator-right-menu mini-dn">
-                  <i className="fa indicator-mn fa-angle-left" />
-                </span>
-              </a>
-              <div
-                role="menu"
-                className="dropdown-menu left-menu-dropdown form-left-menu-std animated flipInX"
-              >
-                <a href="basic-form-element.html" className="dropdown-item">
-                  Basic Elements
-                </a>
-                <a href="advance-form-element.html" className="dropdown-item">
-                  Advance Elements
-                </a>
-                <a href="password-meter.html" className="dropdown-item">
-                  Password Meter
-                </a>
-                <a href="multi-upload.html" className="dropdown-item">
-                  Multi Upload
-                </a>
-                <a href="tinymc.html" className="dropdown-item">
-                  Text Editor
-                </a>
-                <a href="dual-list-box.html" className="dropdown-item">
-                  Dual List Box
-                </a>
-              </div>
-            </li>
+
             <li className="nav-item">
               <a
                 href="/"
