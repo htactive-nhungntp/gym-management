@@ -10,16 +10,17 @@ import EditMachineBase from "./components/Form/FormMachine/EditMachine";
 import EditingMember from "../src/components/EditingMember";
 import Payment from "./components/Payment";
 import AddNewMember from "./components/AddNewMember";
+import SignUp from "./components/Auth/SignUp";
 import { getdata } from "./Helpers/HandleFirebase";
 import "./App.css";
 
-import AdminProfile from "./components/AdminProfile";
-
+import AdminProfileBase from "./components/AdminProfile";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      auth: null,
       members: [],
       billsDay: []
     };
@@ -56,6 +57,9 @@ class App extends Component {
   };
 
   render() {
+   // const { auth } = this.state;
+  
+
     const total = this.state.members;
     const percent = this.totalMemPer(this.statisticInMonth(this.state.members));
     return (
@@ -71,7 +75,6 @@ class App extends Component {
             path="/EditMember/:id"
             component={({ match }) => <EditingMember match={match} />}
           />
-
           <Route
             exact
             path="/machine"
@@ -81,7 +84,7 @@ class App extends Component {
           <Route
             exact
             path="/profile"
-            component={({ match }) => <AdminProfile match={match} />}
+            component={({ match }) => <AdminProfileBase match={match} />}
           />
 
           <Route exact path="/AddMember" component={() => <AddNewMember />} />
@@ -114,6 +117,11 @@ class App extends Component {
             exact
             path="/AddMachine"
             component={props => <AddMachineBase {...props} />}
+          />
+          <Route
+            exact
+            path="/signup"
+            component={({ match }) => <SignUp match={match} />}
           />
 
           <Statistic totalMem={total} percent={percent} />
