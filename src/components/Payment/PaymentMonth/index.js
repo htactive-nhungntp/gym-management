@@ -132,6 +132,7 @@ export default class PaymentMonth extends Component {
     return (
       <>
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" />
           <br /> <h2>Add a New Bill for Month</h2> <br />
           <div className="form-group row">
             <label className="col-sm-1 col-form-label">Phone</label>

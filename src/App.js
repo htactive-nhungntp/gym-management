@@ -23,14 +23,18 @@ class App extends Component {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.loadData();
+  }
+
+  loadData = async () => {
     let billsDay = await getdata(`billsDay`);
     let members = await getdata(`members`);
     this.setState({
       members,
       billsDay
     });
-  }
+  };
 
   handlingDateTime(dateTime) {
     let index = dateTime.search("/");
@@ -114,7 +118,7 @@ class App extends Component {
             component={props => <AddMachineBase {...props} />}
           />
 
-          <Statistic totalMem={total} percent={percent} />
+          {/* <Statistic totalMem={total} percent={percent} /> */}
         </Layout>
       </Router>
     );
