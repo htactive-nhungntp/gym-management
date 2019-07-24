@@ -6,6 +6,7 @@ import PaymentMonth from "./PaymentMonth";
 import "./payment.css";
 
 export default class index extends Component {
+
   render() {
     return (
       <Router>
