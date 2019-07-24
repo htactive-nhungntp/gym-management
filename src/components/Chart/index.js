@@ -1,51 +1,76 @@
 import React, { Component } from "react";
-import CreateReactClass from "create-react-class";
-import "./less.less";
 
-export var ChartJS = CreateReactClass({
-  getInitialState() {
-    return {
+import { getdata } from "../../Helpers/HandleFirebase";
+
+export default class ChartJS extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      origin: [],
       data: [],
       series: [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
+       {num: "1", name: "January"},
+        {num: "2", name:"February"},
+        {num: "3", name:"March"},
+        {num: "4", name:"April"},
+        {num: "5", name:"May"},
+        {num: "6", name:"June"},
+        {num: "7", name:"July"},
+        {num: "8", name:"August"},
+        {num: "9", name:"September"},
+        {num: "11", name:"October"},
+        {num: "11", name:"November"},
+        {num: "12", name:"December"}
       ],
       labels: ["Register", "Pay for Day", "Pay for Month", "Costs", "Profit"],
       colors: ["#43A19E", "#7B43A1", "#1de260", "#F2317A", "#e2a31d"]
     };
-  },
-  componentDidMount: function() {
-    this.populateArray();
-    setInterval(this.populateArray, 2000);
-  },
-  populateArray: function() {
-    var data = [],
-      series = 12, //getRandomInt(2, 10),
-      serieLength = 5; //getRandomInt(2, 10);
+    console.log("==>", props);
+  };
 
-    for (var i = series; i--; ) {
-      var tmp = [];
+  async componentDidMount() {
+    await this.LoadData(this.state.series);
+  };
 
-      for (var j = serieLength; j--; ) {
-        tmp.push(i);
-      }
+  LoadData = StringOfDate => {
+    StringOfDate.map(async month => {
+      let members = await this.LoadObject("members");
+      let billsDay = await this.LoadObject("billsDay");
+      let billsMonth = await this.LoadObject("billsMonth");
+      let filterMembers = members.filter(
+        ob => this.returnMonth(ob.createAt) === month.num
+      );
+      let filterBillsDay = billsDay.filter(
+        ob => this.returnMonth(ob.createAt) === month.num
+      );
+      let filterBillsMonth = billsMonth.filter(ob => ob.month === month.num);
+      const dad = {
+        month: month.num,
+        members: filterMembers,
+        billsDay: filterBillsDay,
+        billsMonth: filterBillsMonth
+      };
+      const da = [filterMembers.length, filterBillsDay.length, filterBillsMonth.length, 10, 20];
+      this.setState({
+        origin: [dad, ...this.state.origin],
+        data: [da, ...this.state.data]
+      });
+    }); 
+  };
 
-      data.push(tmp);
-    }
+  LoadObject = async arr => {
+    let object = await getdata(arr);
+    return object;
+  };
 
-    this.setState({ data: data });
-  },
-  render: function() {
+  returnMonth = date => {
+    let event = date;
+    let index1 = event.indexOf("/");
+    let index2 = event.lastIndexOf("/");
+    return event.slice(index1 + 1, index2);
+  };
+
+  render() {
     return (
       <section>
         <Charts
@@ -59,18 +84,18 @@ export var ChartJS = CreateReactClass({
       </section>
     );
   }
-});
+};
 
-var Legend = CreateReactClass({
-  render: function() {
-    var labels = this.props.labels,
+class Legend extends Component{
+  render() {
+    let labels = this.props.labels,
       colors = this.props.colors;
 
     return (
       <div className="Legend">
         {labels.map(function(label, labelIndex) {
           return (
-            <div>
+            <div key={labelIndex}>
               <span
                 className="Legend--color"
                 style={{ backgroundColor: colors[labelIndex % colors.length] }}
@@ -82,19 +107,19 @@ var Legend = CreateReactClass({
       </div>
     );
   }
-});
+}
 
-var Charts = CreateReactClass({
-  render: function() {
-    var self = this,
+class Charts extends Component {
+  render() {
+    let self = this,
       data = this.props.data,
-      layered = this.props.grouping === "layered" ? true : false,
       stacked = this.props.grouping === "stacked" ? true : false,
       opaque = this.props.opaque,
       max = 0;
-    console.log("data: ", this.props.data);
-    for (var i = data.length; i--; ) {
-      for (var j = data[i].length; j--; ) {
+      console.log(data);
+      
+    for (let i = data.length; i--; ) {
+      for (let j = data[i].length; j--; ) {
         if (data[i][j] > max) {
           max = data[i][j];
         }
@@ -103,47 +128,29 @@ var Charts = CreateReactClass({
 
     return (
       <div className={"Charts" + (this.props.horizontal ? " horizontal" : "")}>
-        {data.map(function(serie, serieIndex) {
-          // var sortedSerie = serie.slice(0),
-          var sum;
-
-          // sum = serie.reduce(function(carry, current) {
-          //   return carry + current;
-          // }, 0);
-          // sortedSerie.sort(compareNumbers);
-
+        {data.length > 0 ? data.map(function(serie, serieIndex) {
+          let sum;
           return (
             <div
               className={"Charts--serie " + self.props.grouping}
               key={serieIndex}
               style={{ height: self.props.height ? self.props.height : "auto" }}
             >
-              <label>{self.props.labels[serieIndex]}</label>
-              {serie.map(function(item, itemIndex) {
+              <label>{self.props.labels[serieIndex].name}</label>
+              {serie.length >0 ? serie.map(function(item, itemIndex) {
                 var color = self.props.colors[itemIndex],
                   style,
                   size = (item / (stacked ? sum : max)) * 100;
-
                 style = {
                   backgroundColor: color,
-                  opacity: opaque ? 1 : item / max + 0.05,
                   zIndex: item
                 };
 
                 if (self.props.horizontal) {
-                  style["width"] = 800 + "%";
+                  style["width"] = 80 + "px";
                 } else {
                   style["height"] = size + "%";
                 }
-
-                // if (layered && !self.props.horizontal) {
-                //   //console.log(sortedSerie, serie, sortedSerie.indexOf(item));
-                //   style["right"] =
-                //     (sortedSerie.indexOf(item) / (serie.length + 1)) * 100 +
-                //     "%";
-                //   // style['left'] = (itemIndex * 10) + '%';
-                // }
-
                 return (
                   <div
                     className={"Charts--item " + self.props.grouping}
@@ -153,13 +160,12 @@ var Charts = CreateReactClass({
                     <b style={{ color: color }}>{item}</b>
                   </div>
                 );
-              })}
+              }) : "sss"}
             </div>
           );
-        })}
+        }) : ""}
       </div>
     );
   }
-});
+};
 
-export default ChartJS;
