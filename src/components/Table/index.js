@@ -42,7 +42,7 @@ class Table extends React.Component {
     const { members } = this.state;
     let count = 0;
     return (
-      <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <TableButton
           color="btn-success"
           content="Add New Member"

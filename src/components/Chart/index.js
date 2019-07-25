@@ -25,9 +25,11 @@ export var ChartJS = CreateReactClass({
     };
   },
   componentDidMount: function() {
+    console.log(this.props);
     this.populateArray();
     setInterval(this.populateArray, 2000);
   },
+
   populateArray: function() {
     var data = [],
       series = 12, //getRandomInt(2, 10),

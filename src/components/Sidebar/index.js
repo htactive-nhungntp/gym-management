@@ -95,7 +95,8 @@ class SidebarBase extends React.Component{
               </Link>
             </li>
             <li className="nav-item">
-                to="/profile"
+              <Link
+             to="/profile"
                 data-toggle="dropdown"
                 role="button"
                 aria-expanded="false"
