@@ -21,9 +21,9 @@ class SidebarBase extends React.Component{
   };
   
   render() {
-    const dataNhung =this.state.user.map((infor)=>{
+    const dataNhung =this.state.user.map((infor, Index)=>{
       return(
-           <div className="sidebar-header">
+           <div className="sidebar-header" key={Index}>
              <a href="/">
              <img className="avatar-user" src={infor.avatar} alt="can not download" />
              </a>
@@ -38,16 +38,31 @@ class SidebarBase extends React.Component{
       {dataNhung}
         <div className="left-custom-menu-adp-wrap">
           <ul className="nav navbar-nav left-sidebar-menu-pro">
+          <li className="nav-item">
+            <Link
+                to="/profile"
+                data-toggle="dropdown"
+                role="button"
+                aria-expanded="false"
+                className="nav-link"
+              >
+                <i className="fa big-icon fa-envelope" />{" "}
+                <span className="mini-dn">Admin Profile</span>{" "}
+                <span className="indicator-right-menu mini-dn">
+                  <i className="fa indicator-mn fa-angle-left" />
+                </span>
+              </Link>
+            </li>
             <li className="nav-item">
               <Link
                 to="/"
                 data-toggle="dropdown"
                 role="button"
                 aria-expanded="false"
-                className="nav-link dropdown-toggle"
+                className="nav-link "
               >
                 <i className="fa big-icon fa-home" />{" "}
-                <span className="mini-dn">Home</span>{" "}
+                <span className="mini-dn">Members</span>{" "}
                 <span className="indicator-right-menu mini-dn">
                   <i className="fa indicator-mn fa-angle-left" />
                 </span>
@@ -59,7 +74,7 @@ class SidebarBase extends React.Component{
                 data-toggle="dropdown"
                 role="button"
                 aria-expanded="false"
-                className="nav-link dropdown-toggle"
+                className="nav-link"
               >
                 <i className="fa big-icon fa-envelope" />{" "}
                 <span className="mini-dn">Payment</span>{" "}
@@ -67,17 +82,6 @@ class SidebarBase extends React.Component{
                   <i className="fa indicator-mn fa-angle-left" />
                 </span>
               </Link>
-              <div
-                role="menu"
-                className="dropdown-menu left-menu-dropdown animated flipInX"
-              >
-                <a href="view-mail.html" className="dropdown-item">
-                  View Mail
-                </a>
-                <a href="compose-mail.html" className="dropdown-item">
-                  Compose Mail
-                </a>
-              </div>
             </li>
             <li className="nav-item">
               <Link
@@ -85,7 +89,7 @@ class SidebarBase extends React.Component{
                 data-toggle="dropdown"
                 role="button"
                 aria-expanded="false"
-                className="nav-link dropdown-toggle"
+                className="nav-link "
               >
                 <i className="fa big-icon fa-envelope" />{" "}
                 <span className="mini-dn">Machines</span>{" "}
@@ -94,106 +98,21 @@ class SidebarBase extends React.Component{
                 </span>
               </Link>
             </li>
-            <li className="nav-item">
-                to="/profile"
-                data-toggle="dropdown"
-                role="button"
-                aria-expanded="false"
-                className="nav-link dropdown-toggle"
-              >
-                <i className="fa big-icon fa-envelope" />{" "}
-                <span className="mini-dn">Admin Profile</span>{" "}
-                <span className="indicator-right-menu mini-dn">
-                  <i className="fa indicator-mn fa-angle-left" />
-                </span>
-              </Link>
-            </li>
+            
             <li className="nav-item">
                <Link
                 to="/Statistic"
                 data-toggle="dropdown"
                 role="button"
                 aria-expanded="false"
-                className="nav-link dropdown-toggle"
+                className="nav-link"
               >
                 <i className="fa big-icon fa-bar-chart-o" />{" "}
-                <span className="mini-dn">Charts</span>{" "}
+                <span className="mini-dn">Dashboard</span>{" "}
                 <span className="indicator-right-menu mini-dn">
                   <i className="fa indicator-mn fa-angle-left" />
                 </span>
               </Link>
-            </li>
-            <li className="nav-item">
-              <a
-                href="/"
-                data-toggle="dropdown"
-                role="button"
-                aria-expanded="false"
-                className="nav-link dropdown-toggle"
-              >
-                <i className="fa big-icon fa-table" />{" "}
-                <span className="mini-dn">Data Tables</span>{" "}
-                <span className="indicator-right-menu mini-dn">
-                  <i className="fa indicator-mn fa-angle-left" />
-                </span>
-              </a>
-              <div
-                role="menu"
-                className="dropdown-menu left-menu-dropdown animated flipInX"
-              >
-                <a href="static-table.html" className="dropdown-item">
-                  Static Table
-                </a>
-                <a href="data-table.html" className="dropdown-item">
-                  Data Table
-                </a>
-              </div>
-            </li>
-            <li className="nav-item">
-              <a
-                href="/"
-                data-toggle="dropdown"
-                role="button"
-                aria-expanded="false"
-                className="nav-link dropdown-toggle"
-              >
-                <i className="fa big-icon fa-edit" />{" "}
-                <span className="mini-dn">Forms Elements</span>{" "}
-                <span className="indicator-right-menu mini-dn">
-                  <i className="fa indicator-mn fa-angle-left" />
-                </span>
-              </a>
-            </li>
-
-            <li className="nav-item">
-              <a
-                href="/"
-                data-toggle="dropdown"
-                role="button"
-                aria-expanded="false"
-                className="nav-link dropdown-toggle"
-              >
-                <i className="fa big-icon fa-desktop" />{" "}
-                <span className="mini-dn">App views</span>{" "}
-                <span className="indicator-right-menu mini-dn">
-                  <i className="fa indicator-mn fa-angle-left" />
-                </span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                href="/"
-                data-toggle="dropdown"
-                role="button"
-                aria-expanded="false"
-                className="nav-link dropdown-toggle"
-              >
-                <i className="fa big-icon fa-files-o" />{" "}
-                <span className="mini-dn">Pages</span>{" "}
-                <span className="indicator-right-menu mini-dn">
-                  <i className="fa indicator-mn fa-angle-left" />
-                </span>
-              </a>
             </li>
           </ul>
         </div>

@@ -127,7 +127,7 @@ export default class PaymentMonth extends Component {
   };
 
   render() {
-    let { findPhone, originbills } = this.state;
+    let { originbills } = this.state;
     let count = 0;
     return (
       <>
