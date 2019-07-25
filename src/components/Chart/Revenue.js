@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { getdata } from "../../Helpers/HandleFirebase";
 
-export default class ChartJS extends Component {
+export default class Revenue extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,8 +21,8 @@ export default class ChartJS extends Component {
         { num: "11", name: "November" },
         { num: "12", name: "December" }
       ],
-      labels: ["Register", "Pay for Day", "Pay for Month"],
-      colors: ["#20882d", "#F2317A", "#e2a31d"]
+      labels: ["Revenue"],
+      colors: ["#3957bf"]
     };
   }
 
@@ -35,18 +35,14 @@ export default class ChartJS extends Component {
       let members = await this.LoadObject("members");
       let billsDay = await this.LoadObject("billsDay");
       let billsMonth = await this.LoadObject("billsMonth");
-      let filterMembers = members.filter(
-        ob => this.returnMonth(ob.createAt) === month.num
-      );
+
       let filterBillsDay = billsDay.filter(
         ob => this.returnMonth(ob.createAt) === month.num
       );
       let filterBillsMonth = billsMonth.filter(ob => ob.month === month.num);
-      const da = [
-        filterMembers.length,
-        filterBillsDay.length,
-        filterBillsMonth.length
-      ];
+      let revenue =
+        filterBillsDay.length * 10000 + filterBillsMonth.length * 170000;
+      const da = [revenue];
       this.setState({
         data: [da, ...this.state.data]
       });
@@ -125,7 +121,7 @@ class Charts extends Component {
               let sum;
               return (
                 <div
-                  className={"Charts--serie " + self.props.grouping}
+                  className={"Charts--serie "}
                   key={serieIndex}
                   style={{
                     height: self.props.height ? self.props.height : "auto"
@@ -148,11 +144,15 @@ class Charts extends Component {
                         }
                         return (
                           <div
-                            className={"Charts--item " + self.props.grouping}
+                            className={"Charts--item "}
                             style={style}
                             key={itemIndex}
                           >
-                            <b style={{ color: color }}>{item}</b>
+                            <b style={{ color: color }}>
+                              {item
+                                .toFixed(2)
+                                .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
+                            </b>
                           </div>
                         );
                       })
