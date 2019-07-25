@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Layout from "./components/Layout";
 import Table from "./components/Table";
-import Statistic from "./components/Statistic";
 import Machine from "./components/Machines";
 import AddMachineBase from "./components/Form/FormMachine";
 import EditMachineBase from "./components/Form/FormMachine/EditMachine";
@@ -62,11 +61,6 @@ class App extends Component {
   };
 
   render() {
-   // const { auth } = this.state;
-  
-
-    const total = this.state.members;
-    const percent = this.totalMemPer(this.statisticInMonth(this.state.members));
     return (
       <Router>
         <Layout>
@@ -113,7 +107,7 @@ class App extends Component {
 
           <Route
             exact
-            path="/Payment"
+            path="/Payment/day"
             component={({ match }) => <Payment match={match} />}
           />
 
