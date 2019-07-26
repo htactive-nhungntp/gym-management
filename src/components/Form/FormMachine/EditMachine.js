@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "firebase/firestore";
 import TableButton from "../../Table/TableButton/index";
 import { withFirebase } from "../../../Firebase/context";
+import { Swaling } from "../../../Helpers/afterActions";
 import "../../../Firebase/firebase";
 require("firebase/firestore");
 
@@ -59,6 +60,14 @@ class EditMachineBase extends Component {
         status: this.state.updateStatus,
         type_id: this.state.type_id
       });
+    Swaling("Update data successfully !");
+    this.setState({
+      updateName: "",
+      updateStatus: "",
+      img: null,
+      url: "",
+      type_id: ""
+    });
   };
 
   handleImage = e => {
@@ -74,32 +83,33 @@ class EditMachineBase extends Component {
   handleUpload = e => {
     e.preventDefault();
     const { img } = this.state;
-    console.log("img ne: ", img);
     if (img) {
-    const uploadImage = this.props.firebase.storage
-      .ref(`images/${img.name}`)
-      .put(img);
-    uploadImage.on(
-      "state_changed",
-      snapshot => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        this.setState({ progress });
-      },
-      error => {
-        console.log(error);
-      },
-      () => {
-        this.props.firebase.storage
-          .ref("images")
-          .child(img.name)
-          .getDownloadURL()
-          .then(url => {
-            this.updateMachines(url);
-          });
-      }
-    );
+      const uploadImage = this.props.firebase.storage
+        .ref(`images/${img.name}`)
+        .put(img);
+      uploadImage.on(
+        "state_changed",
+        snapshot => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          this.setState({ progress });
+        },
+        error => {
+          console.log(error);
+        },
+        () => {
+          this.props.firebase.storage
+            .ref("images")
+            .child(img.name)
+            .getDownloadURL()
+            .then(url => {
+              this.updateMachines(url);
+            });
+          // this.props.history.push(`/machine`);
+        }
+      );
+
     }
     this.updateMachines(this.state.url);
   };

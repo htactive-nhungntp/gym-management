@@ -59,6 +59,8 @@ class AddNewMember extends React.Component {
           newPhone: "",
           newDOB: ""
         });
+        // this.props.history.push(`/`);
+        console.log(this.props);
       } else {
         Warning("The phone is already registered !");
       }
