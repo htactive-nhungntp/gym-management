@@ -109,6 +109,7 @@ class EditMachineBase extends Component {
           // this.props.history.push(`/machine`);
         }
       );
+
     }
     this.updateMachines(this.state.url);
   };

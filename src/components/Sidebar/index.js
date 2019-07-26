@@ -20,8 +20,12 @@ class SidebarBase extends React.Component {
     });
   };
 
+  logout = () => {
+    localStorage.removeItem('user')
+  }
+
   render() {
-    const dataNhung = this.state.user.map((infor, Index) => {
+    const data = this.state.user.map((infor, Index) => {
       return (
         <div className="sidebar-header" key={Index}>
           <a href="/">
@@ -39,7 +43,7 @@ class SidebarBase extends React.Component {
     return (
       <div className="left-sidebar-pro">
         <nav id="sidebar">
-          {dataNhung}
+          {data}
           <div className="left-custom-menu-adp-wrap">
             <ul className="nav navbar-nav left-sidebar-menu-pro">
               <li className="nav-item">
@@ -113,6 +117,21 @@ class SidebarBase extends React.Component {
                 >
                   <i className="fa big-icon fa-bar-chart-o" />{" "}
                   <span className="mini-dn">Dashboard</span>{" "}
+                  <span className="indicator-right-menu mini-dn">
+                    <i className="fa indicator-mn fa-angle-left" />
+                  </span>
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  to="/signup"
+                  data-toggle="dropdown"
+                  role="button"
+                  aria-expanded="false"
+                  className="nav-link"
+                >
+                  <i className="fa fa-sign-out"></i>
+                  <span className="mini-dn" onClick={this.logout}>Log out</span>
                   <span className="indicator-right-menu mini-dn">
                     <i className="fa indicator-mn fa-angle-left" />
                   </span>
