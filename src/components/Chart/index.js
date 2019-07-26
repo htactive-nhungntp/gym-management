@@ -114,7 +114,6 @@ class Charts extends Component {
     let self = this,
       data = this.props.data,
       stacked = this.props.grouping === "stacked" ? true : false,
-      opaque = this.props.opaque,
       max = 0;
       console.log(data);
       
