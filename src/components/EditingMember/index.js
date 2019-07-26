@@ -70,9 +70,9 @@ class EditingMember extends React.Component {
     this.setState(
       {
         formErrors: fieldValidationErrors,
-        updatePhoneValid: updatePhoneValid,
-        updateNameValid: updateNameValid,
-        updateAddressValid: updateAddressValid
+        updatePhoneValid,
+        updateNameValid,
+        updateAddressValid
       },
       this.validateForm
     );
@@ -97,7 +97,7 @@ class EditingMember extends React.Component {
   };
 
   update = async id => {
-    if (this.state.formValid) {
+    if (this.state.formValid === "") {
       let onData = await callFirebase(`members/${id}`);
       onData.set({
         name: this.state.updateName,
@@ -190,7 +190,8 @@ class EditingMember extends React.Component {
               <input
                 type="date"
                 className="form-control"
-                onChange={e => this.toggleChange(e, "updateDOB")}
+                onChange={this.toggleChange}
+                name="updateDOB"
                 value={this.state.updateDOB}
               />
             </div>

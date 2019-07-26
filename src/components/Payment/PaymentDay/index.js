@@ -56,7 +56,6 @@ export default class PaymentDay extends Component {
     }
   };
 
-
   toggleChange = (event, stateName) => {
     switch (stateName) {
       case "newName":
@@ -145,15 +144,11 @@ export default class PaymentDay extends Component {
                       <td>{bill.phone}</td>
                       <td>{bill.createAt}</td>
                       <td>
-                        <button className="btn btn-large btn-info">
-                          Update
-                        </button>
                         &nbsp; &nbsp;
                         <button
                           className="btn btn-large btn-danger"
                           onClick={() => this.deleteBill(bill.id)}
                         >
-
                           Delete
                         </button>
                       </td>

@@ -50,6 +50,11 @@ export default class PaymentMonth extends Component {
           originbills: origin.filter(bill => bill.month === month)
         });
         break;
+      case "":
+        this.setState({
+          originbills: origin
+        });
+        break;
       default:
         this.setState({
           originbills: origin

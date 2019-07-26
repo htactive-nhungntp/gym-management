@@ -107,7 +107,7 @@ class App extends Component {
 
           <Route
             exact
-            path="/Payment"
+            path="/Payment/day"
             component={({ match }) => <Payment match={match} />}
           />
 
