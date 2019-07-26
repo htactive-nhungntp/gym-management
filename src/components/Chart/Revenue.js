@@ -32,7 +32,7 @@ export default class Revenue extends Component {
 
   LoadData = StringOfDate => {
     StringOfDate.map(async month => {
-      let members = await this.LoadObject("members");
+      // let members = await this.LoadObject("members");
       let billsDay = await this.LoadObject("billsDay");
       let billsMonth = await this.LoadObject("billsMonth");
 

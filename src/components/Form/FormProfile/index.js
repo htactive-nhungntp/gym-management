@@ -92,8 +92,8 @@ class FormProfileBase extends Component {
   handleUpload = e => {
     e.preventDefault();
     const { img } = this.state;
-    console.log("img ne: ", img);
-    const uploadImage = this.props.firebase.storage
+    if(img){
+      const uploadImage = this.props.firebase.storage
       .ref(`images/${img.name}`)
       .put(img);
     uploadImage.on(
@@ -115,9 +115,10 @@ class FormProfileBase extends Component {
           .then(url => {
             this.updateInfor(url);
           });
-        // this.props.history.push(`/machine`);
       }
     );
+    }
+    this.updateInfor(this.state.url)
   };
 
 

@@ -75,6 +75,7 @@ class EditMachineBase extends Component {
     e.preventDefault();
     const { img } = this.state;
     console.log("img ne: ", img);
+    if (img) {
     const uploadImage = this.props.firebase.storage
       .ref(`images/${img.name}`)
       .put(img);
@@ -97,9 +98,10 @@ class EditMachineBase extends Component {
           .then(url => {
             this.updateMachines(url);
           });
-        // this.props.history.push(`/machine`);
       }
     );
+    }
+    this.updateMachines(this.state.url);
   };
 
   render() {
