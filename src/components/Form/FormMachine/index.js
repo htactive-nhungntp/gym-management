@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "firebase/firestore";
+
 import TableButton from "../../Table/TableButton/index";
 import { withFirebase } from "../../../Firebase/context";
+import { Swaling, Warning } from "../../../Helpers/afterActions";
 import "../../../Firebase/firebase";
 require("firebase/firestore");
 
@@ -33,13 +35,31 @@ class AddMachineBase extends Component {
     }
   };
 
+  checkNull = field => {
+    if (field === "") return false;
+    else return true;
+  };
+
   addMachines = url => {
-    this.props.firebase.callFirebase(`machines`).push({
-      name: this.state.newData,
-      image: url,
-      status: this.state.status,
-      type_id: this.state.type_id
-    });
+    let check =
+      !this.checkNull(url) ||
+      !this.checkNull(this.state.newData) ||
+      !this.checkNull(this.state.status) ||
+      !this.checkNull(this.state.type_id)
+        ? false
+        : true;
+    if (check) {
+      this.props.firebase.callFirebase(`machines`).push({
+        name: this.state.newData,
+        image: url,
+        status: this.state.status,
+        type_id: this.state.type_id
+      });
+      this.props.history.push(`/machine`);
+      Swaling("Data is added !");
+    } else {
+      Warning("Any field is null !");
+    }
   };
 
   handleImage = e => {
@@ -55,31 +75,34 @@ class AddMachineBase extends Component {
   handleUpload = e => {
     e.preventDefault();
     const { img } = this.state;
-    const uploadImage = this.props.firebase.storage
-      .ref(`images/${img.name}`)
-      .put(img);
-    uploadImage.on(
-      "state_changed",
-      snapshot => {
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        this.setState({ progress });
-      },
-      error => {
-        console.log(error);
-      },
-      () => {
-        this.props.firebase.storage
-          .ref("images")
-          .child(img.name)
-          .getDownloadURL()
-          .then(url => {
-            this.addMachines(url);
-          });
-        this.props.history.push(`/machine`);
-      }
-    );
+    if (img) {
+      const uploadImage = this.props.firebase.storage
+        .ref(`images/${img.name}`)
+        .put(img);
+      uploadImage.on(
+        "state_changed",
+        snapshot => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          this.setState({ progress });
+        },
+        error => {
+          console.log(error);
+        },
+        () => {
+          this.props.firebase.storage
+            .ref("images")
+            .child(img.name)
+            .getDownloadURL()
+            .then(url => {
+              this.addMachines(url);
+            });
+        }
+      );
+    } else {
+      Warning("Choose the image please !");
+    }
   };
 
   render() {

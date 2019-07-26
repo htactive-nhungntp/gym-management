@@ -33,10 +33,10 @@ class EditingMember extends React.Component {
       updateDOB: mem.DOB,
       updateCreateAt: mem.createAt,
       id: mem.id,
-      updateNameValid: false,
-      updatePhoneValid: false,
-      updateAddressValid: false,
-      formValid: false
+      updateNameValid: true,
+      updatePhoneValid: true,
+      updateAddressValid: true,
+      formValid: true
     });
   }
 
@@ -49,19 +49,19 @@ class EditingMember extends React.Component {
       case "updateName":
         updateNameValid = value.match(/([\D])$/i) && value.length >= 2;
         fieldValidationErrors.updateName = updateNameValid
-          ? ""
+          ? false
           : " Does not contain numbers and must be longer than 2 characters !";
         break;
       case "updateAddress":
         updateAddressValid = value.length >= 5;
         fieldValidationErrors.updateAddress = updateAddressValid
-          ? ""
+          ? false
           : " Must be longer than 5 characters !";
         break;
       case "updatePhone":
         updatePhoneValid = validator.isMobilePhone(value);
         fieldValidationErrors.updatePhone = updatePhoneValid
-          ? ""
+          ? false
           : " The phone number is not right !";
         break;
       default:
@@ -97,7 +97,7 @@ class EditingMember extends React.Component {
   };
 
   update = async id => {
-    if (this.state.formValid === "") {
+    if (this.state.formValid) {
       let onData = await callFirebase(`members/${id}`);
       onData.set({
         name: this.state.updateName,

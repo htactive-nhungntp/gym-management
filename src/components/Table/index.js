@@ -24,7 +24,6 @@ class Table extends React.Component {
     });
   };
 
-  
   deleteMember = async key => {
     let comfirm = window.confirm("Are you sure you wish to delete this item?");
     if (comfirm) {

@@ -44,22 +44,23 @@ export default class PaymentMonth extends Component {
   loadData = async () => {
     let origin = await getdata("billsMonth");
     let month = this.state.month;
-    switch (month) {
-      case month:
-        this.setState({
-          originbills: origin.filter(bill => bill.month === month)
-        });
-        break;
-      case "":
-        this.setState({
-          originbills: origin
-        });
-        break;
-      default:
-        this.setState({
-          originbills: origin
-        });
-        break;
+    if (month != "") {
+      switch (month) {
+        case month:
+          this.setState({
+            originbills: origin.filter(bill => bill.month === month)
+          });
+          break;
+        default:
+          this.setState({
+            originbills: origin
+          });
+          break;
+      }
+    } else {
+      this.setState({
+        originbills: origin
+      });
     }
   };
 
@@ -244,9 +245,6 @@ export default class PaymentMonth extends Component {
                         <td>{bill.month}</td>
                         <td>{bill.createAt}</td>
                         <td>
-                          <button className="btn btn-large btn-info">
-                            Update
-                          </button>
                           &nbsp; &nbsp;
                           <button
                             className="btn btn-large btn-danger"
