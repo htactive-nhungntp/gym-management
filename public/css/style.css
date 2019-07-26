@@ -50,6 +50,9 @@ a:active, a:hover, a:focus {
   outline: 0 none;
   text-decoration:none;
 }
+.image{
+	background-image: url("http://advancefitnessgym.com/files/assets/phong_gym.jpg");
+}
 img{
 	height: 70px;
 	width: 70px;
