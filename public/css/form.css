@@ -13,10 +13,17 @@
 }
 .login-bg{
 	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
-	padding:20px;
-	
-	margin-left: 730px;
-    margin-top: 405px;
+	background: rgba(255, 255, 255, .9);
+	border-radius: 5px 5px 0 0;
+}
+.box-center {
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	background-image: url('https://simplygym.co.uk/wp-content/uploads/2016/11/21199506_1593736974024042_6480577617807340323_o-1500x1000.jpg')
+}
+.h-100vh {
+	height: 100vh;
 }
 .login-input-area input[type="email"], .login-input-area input[type="password"], .login-input-area input[type="text"]{
 	width:100%;
@@ -64,14 +71,14 @@
 	font-size:14px;
 }
 .login-button-pro{
-	padding:30px 0px;
+	padding-top:30px;
 }
 .login-button-pro .login-button{
 	padding:10px 20px;
 	border:none;
 	background:#03a9f4;
 	color:#fff;
-	font-weight:14px;
+	font-size:20px;
 	transition: all .4s ease 0s;
 }
 .login-button-pro .login-button.login-button-rg{
