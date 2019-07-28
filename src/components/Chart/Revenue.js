@@ -44,7 +44,7 @@ export default class Revenue extends Component {
         filterBillsDay.length * 10000 + filterBillsMonth.length * 170000;
       const da = [revenue];
       this.setState({
-        data: [da, ...this.state.data]
+        data: [ ...this.state.data, da]
       });
     });
   };
