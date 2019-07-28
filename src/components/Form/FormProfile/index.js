@@ -64,7 +64,7 @@ class FormProfileBase extends Component {
   };
 
   updateInfor = url => {
-    if (this.state.updatePassword == this.state.updateConfirm) {
+    if (this.state.updatePassword === this.state.updateConfirm) {
       this.props.firebase.callFirebase(`acount/${1}`).set({
         full_name: this.state.updateFullName,
         address: this.state.updateAddress,
