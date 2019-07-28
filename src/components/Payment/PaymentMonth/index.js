@@ -44,7 +44,7 @@ export default class PaymentMonth extends Component {
   loadData = async () => {
     let origin = await getdata("billsMonth");
     let month = this.state.month;
-    if (month != "") {
+    if (month !== "") {
       switch (month) {
         case month:
           this.setState({
