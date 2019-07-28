@@ -3,8 +3,6 @@
 import firebaseConfig from "../ConfigFirebase";
 import firebase from "firebase";
 
-import { API_RANDOM } from "./Api_url";
-
 export default (!firebase.apps.length
   ? firebase.initializeApp(firebaseConfig)
   : firebase.app());

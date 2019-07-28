@@ -1,8 +1,6 @@
 import React from "react";
-import firebase from "firebase";
 
-import {Swaling} from "../../Helpers/afterActions"
-import firebaseConfig from "../../ConfigFirebase";
+import { Swaling } from "../../Helpers/afterActions";
 import TableRow from "./TableRow";
 import TableButton from "./TableButton";
 import { getdata, deleteData } from "../.././Helpers/HandleFirebase";
@@ -26,10 +24,9 @@ class Table extends React.Component {
     });
   };
 
-  
   deleteMember = async key => {
-    let comfirm = window.confirm('Are you sure you wish to delete this item?');
-    if(comfirm){
+    let comfirm = window.confirm("Are you sure you wish to delete this item?");
+    if (comfirm) {
       let onData = deleteData(key);
       onData.remove();
       Swaling("Information deleted !");
@@ -41,7 +38,7 @@ class Table extends React.Component {
     const { members } = this.state;
     let count = 0;
     return (
-      <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <TableButton
           color="btn-success"
           content="Add New Member"

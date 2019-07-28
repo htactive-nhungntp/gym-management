@@ -1,9 +1,9 @@
 import React from "react";
-import validator from 'validator' 
+import validator from "validator";
 
 import TableButton from "../Table/TableButton";
-import { callFirebase } from "../.././Helpers/HandleFirebase";
-import {Swaling, Warning} from "../../Helpers/afterActions"
+import { getdata, callFirebase } from "../.././Helpers/HandleFirebase";
+import { Swaling, Warning } from "../../Helpers/afterActions";
 
 class AddNewMember extends React.Component {
   constructor(props) {
@@ -13,9 +13,10 @@ class AddNewMember extends React.Component {
       newAddress: "",
       newPhone: "",
       newDOB: "",
-      formErrors: {newName: "", newPhone: ""},
+      formErrors: { newName: "", newPhone: "", newAddress: "" },
       newNameValid: "",
       newPhoneValid: "",
+      newAddressValid: "",
       formValid: ""
     };
   }
@@ -24,82 +25,104 @@ class AddNewMember extends React.Component {
     return error.length === 0 ? "" : error;
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.setState({
       newNameValid: false,
       newPhoneValid: false,
+      newAddressValid: false,
       formValid: false
     });
   }
 
-  addMember() {
-    if(this.state.formValid){
+  addMember = async () => {
+    if (this.state.formValid) {
       const name = this.state.newName;
       const address = this.state.newAddress;
       const phone = this.state.newPhone;
       const DOB = this.state.newDOB;
-      let onData = callFirebase(`members`);
-      onData.push({
-        name,
-        address,
-        phone,
-        DOB,
-        createAt: new Date().toLocaleString()
-      });
-      Swaling("Infpomation Added !");
-      this.setState({
-        newName: "",
-        newAddress: "",
-        newPhone: "",
-        newDOB: ""
-      });
-    }else{
-      Warning("Infomations are saved !");
+      const members = await getdata("members");
+      let mem = members.some(mem => mem.phone === phone);
+      console.log("already: ", mem);
+      if (!mem) {
+        let onData = callFirebase(`members`);
+        onData.push({
+          name,
+          address,
+          phone,
+          DOB,
+          createAt: new Date().toLocaleString()
+        });
+        Swaling("Infpomation Added !");
+        this.setState({
+          newName: "",
+          newAddress: "",
+          newPhone: "",
+          newDOB: ""
+        });
+        // this.props.history.push(`/`);
+        console.log(this.props);
+      } else {
+        Warning("The phone is already registered !");
+      }
+    } else {
+      Warning("Infomations are not saved !");
     }
-  }
+  };
 
-  validateField(fieldName, value) {
+  validateField = (fieldName, value) => {
     let fieldValidationErrors = this.state.formErrors;
     let newPhoneValid = this.state.newPhoneValid;
     let newNameValid = this.state.newNameValid;
+    let newAddressValid = this.state.newAddressValid;
     switch (fieldName) {
-        case "newName":
-          newNameValid = value.match(/([\D])$/i) && value.length >= 2;
-            fieldValidationErrors.newName = newNameValid ? "" : " Does not contain numbers and must be longer than 2 characters";
-            break;
-        case "newPhone":
-            newPhoneValid = validator.isMobilePhone(value);
-            fieldValidationErrors.newPhone = newPhoneValid ? "" : " The phone number is not right !";
-            break;
-        default:
-            break;
+      case "newName":
+        newNameValid = value.match(/([\D])$/i) && value.length >= 2;
+        fieldValidationErrors.newName = newNameValid
+          ? ""
+          : " Does not contain numbers and must be longer than 2 characters !";
+        break;
+      case "newAddress":
+        newAddressValid = value.length >= 5;
+        fieldValidationErrors.newAddress = newAddressValid
+          ? ""
+          : " Must be longer than 5 characters !";
+        break;
+      case "newPhone":
+        newPhoneValid = validator.isMobilePhone(value);
+        fieldValidationErrors.newPhone = newPhoneValid
+          ? ""
+          : " The phone number is not right !";
+        break;
+      default:
+        break;
     }
-
     this.setState(
-        {
-            formErrors: fieldValidationErrors,
-            newPhoneValid: newPhoneValid,
-            newNameValid: newNameValid,
-        },
-        this.validateForm
+      {
+        formErrors: fieldValidationErrors,
+        newPhoneValid: newPhoneValid,
+        newNameValid: newNameValid,
+        newAddressValid: newAddressValid
+      },
+      this.validateForm
     );
-}
+  };
 
-validateForm() {
-    this.setState(
-        {
-            formValid: this.state.newPhoneValid && this.state.newNameValid
-        }
-    );
-}
+  validateForm = () => {
+    this.setState({
+      formValid:
+        this.state.newPhoneValid &&
+        this.state.newNameValid &&
+        this.state.newAddressValid
+    });
+  };
 
-  toggleChange = (event) => {
+  toggleChange = event => {
     var target = event.target;
-        var name = target.name;
-        var value = target.value;
-        this.setState({ [name]: value }, () => {
-            this.validateField(name, value);
-        });
+    var name = target.name;
+    var value = target.value;
+    this.setState({ [name]: value }, () => {
+      this.validateField(name, value);
+    });
   };
 
   render() {
@@ -114,9 +137,12 @@ validateForm() {
           <div className="form-group row">
             <label className="col-sm-2 col-form-label">Name</label>
             <div className="col-sm-10">
-            <span className="has-error"> {this.errorClass(this.state.formErrors.newName)} </span>
+              <span className="has-error">
+                {" "}
+                {this.errorClass(this.state.formErrors.newName)}{" "}
+              </span>
               <input
-              required 
+                required
                 type="text"
                 className={`form-control`}
                 onChange={this.toggleChange}
@@ -128,8 +154,12 @@ validateForm() {
           <div className="form-group row">
             <label className="col-sm-2 col-form-label">Address</label>
             <div className="col-sm-10">
+              <span className="has-error">
+                {" "}
+                {this.errorClass(this.state.formErrors.newAddress)}{" "}
+              </span>
               <input
-              required 
+                required
                 type="text"
                 className={`form-control`}
                 onChange={this.toggleChange}
@@ -143,9 +173,12 @@ validateForm() {
               phone
             </label>
             <div className="col-sm-10">
-            <span className="has-error"> {this.errorClass(this.state.formErrors.newPhone)} </span>
+              <span className="has-error">
+                {" "}
+                {this.errorClass(this.state.formErrors.newPhone)}{" "}
+              </span>
               <input
-              required 
+                required
                 type="text"
                 className={`form-control `}
                 name="newPhone"
@@ -160,7 +193,7 @@ validateForm() {
             </label>
             <div className="col-sm-10">
               <input
-              required 
+                required
                 type="date"
                 className="form-control"
                 name="newDOB"

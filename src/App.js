@@ -1,35 +1,52 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from "react-router-dom";
 
 import Layout from "./components/Layout";
 import Table from "./components/Table";
-import Statistic from "./components/Statistic";
 import Machine from "./components/Machines";
 import AddMachineBase from "./components/Form/FormMachine";
 import EditMachineBase from "./components/Form/FormMachine/EditMachine";
 import EditingMember from "../src/components/EditingMember";
 import Payment from "./components/Payment";
+import StatisticYear from "./components/TotalYear";
 import AddNewMember from "./components/AddNewMember";
+import SignUp from "./components/Auth/SignUp";
 import { getdata } from "./Helpers/HandleFirebase";
+import PrivateRoute from "./components/PrivateRoute";
 import "./App.css";
+
+import AdminProfileBase from "./components/AdminProfile";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      acount: [],
       members: [],
       billsDay: []
     };
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.loadData();
+  }
+
+  loadData = async () => {
     let billsDay = await getdata(`billsDay`);
     let members = await getdata(`members`);
+    let acount = localStorage.getItem("user");
     this.setState({
       members,
-      billsDay
+      billsDay,
+      acount
     });
-  }
+    console.log(this.state.acount, "fffffff");
+  };
 
   handlingDateTime(dateTime) {
     let index = dateTime.search("/");
@@ -52,63 +69,82 @@ class App extends Component {
     return percentRegis;
   };
 
+  isAuthenticated = () => {
+    if (localStorage.getItem("user")) {
+      return true;
+    }
+
+    return false;
+  };
+
   render() {
-    const total = this.state.members;
-    const percent = this.totalMemPer(this.statisticInMonth(this.state.members));
     return (
       <Router>
-        <Layout>
-          <Route
-            exact
-            path="/"
-            component={({ match }) => <Table match={match} />}
-          />
-          <Route
-            exact
-            path="/EditMember/:id"
-            component={({ match }) => <EditingMember match={match} />}
-          />
+        {!this.state.acount && <Redirect to="/signup" />}
 
-          <Route
-            exact
-            path="/machine"
-            component={({ match }) => <Machine match={match} />}
-          />
+        <Switch>
+          <Route exact path="/signup" component={SignUp} />
+          <Layout>
+            <PrivateRoute
+              exact
+              path="/"
+              component={({ match }) => <Table match={match} />}
+              isAuthenticated={this.isAuthenticated}
+            />
+            {/* <Route
+              exact
+              path="/"
+              component={({ match }) => <Table match={match} />}
+            /> */}
+            <Route
+              exact
+              path="/EditMember/:id"
+              component={({ match }) => <EditingMember match={match} />}
+            />
+            <Route
+              exact
+              path="/machine"
+              component={({ match }) => <Machine match={match} />}
+            />
 
-          <Route exact path="/AddMember" component={() => <AddNewMember />} />
-          <Route
-            exact
-            path="/DeleteMember/:id"
-            component={({ match }) => <EditingMember match={match} />}
-          />
+            <Route
+              exact
+              path="/profile"
+              component={({ match }) => <AdminProfileBase match={match} />}
+            />
 
-          <Route
-            exact
-            path="/EditMachine/:id"
-            component={({ match }) => <EditMachineBase match={match} />}
-          />
+            <Route exact path="/AddMember" component={() => <AddNewMember />} />
+            <Route
+              exact
+              path="/DeleteMember/:id"
+              component={({ match }) => <EditingMember match={match} />}
+            />
 
-          <Route
-            exact
-            path="/Payment"
-            component={({ match }) => <Payment match={match} />}
-          />
+            <Route
+              exact
+              path="/EditMachine/:id"
+              component={({ match }) => <EditMachineBase match={match} />}
+            />
 
-          {/* <Route path="/EditMember" component={MemberEditing} /> */}
-          {/* <Route path="/DeleteMember" component={Detail} />
-          <Route path="/AddMember" component={Detail} />
-          <Route path="/PaymentDay" component={Detail} />
-          <Route path="/PaymentMonth" component={Detail} /> */}
-          {/*  */}
+            <Route
+              exact
+              path="/Statistic"
+              component={({ match }) => <StatisticYear match={match} />}
+            />
 
-          <Route
-            exact
-            path="/AddMachine"
-            component={props => <AddMachineBase {...props} />}
-          />
+            <Route
+              exact
+              path="/Payment/day"
+              component={({ match }) => <Payment match={match} />}
+            />
 
-          <Statistic totalMem={total} percent={percent} />
-        </Layout>
+            <Route
+              exact
+              path="/AddMachine"
+              component={props => <AddMachineBase {...props} />}
+            />
+          </Layout>
+        </Switch>
       </Router>
     );
   }

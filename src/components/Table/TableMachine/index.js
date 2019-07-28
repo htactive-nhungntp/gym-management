@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TableButton from "../TableButton";
+import { Swaling, Warning } from "../../../Helpers/afterActions";
 
 export default class TableMachine extends Component {
   constructor(props) {
@@ -11,7 +12,15 @@ export default class TableMachine extends Component {
   }
 
   deleteMachines = id => {
-    this.props.deleteMachine(id);
+    let confirm = window.confirm(
+      "Are you sure that you wanna delete this item ?"
+    );
+    if (confirm) {
+      this.props.deleteMachine(id);
+      Swaling("Data is deleted !");
+    } else {
+      Warning("Is not correctly");
+    }
   };
   render() {
     let count = 0;
@@ -50,7 +59,7 @@ export default class TableMachine extends Component {
     );
     return (
       <div>
-        <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <TableButton
             color="btn-success"
             content="Add New Machine"

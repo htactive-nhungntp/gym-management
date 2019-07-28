@@ -12,9 +12,11 @@
 	font-size:20px;
 }
 .login-bg{
-	background:#fff;
 	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 	padding:20px;
+	
+	margin-left: 730px;
+    margin-top: 405px;
 }
 .login-input-area input[type="email"], .login-input-area input[type="password"], .login-input-area input[type="text"]{
 	width:100%;
@@ -367,3 +369,4 @@ fieldset{
 .rating label{
 	margin:0px;
 }
+
