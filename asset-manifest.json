@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/gym-management/static/css/main.7ef435e9.chunk.css",
-    "main.js": "/gym-management/static/js/main.0a8f4abf.chunk.js",
-    "main.js.map": "/gym-management/static/js/main.0a8f4abf.chunk.js.map",
+    "main.js": "/gym-management/static/js/main.f34684e1.chunk.js",
+    "main.js.map": "/gym-management/static/js/main.f34684e1.chunk.js.map",
     "runtime~main.js": "/gym-management/static/js/runtime~main.f9b940d9.js",
     "runtime~main.js.map": "/gym-management/static/js/runtime~main.f9b940d9.js.map",
     "static/css/2.22a7d4ef.chunk.css": "/gym-management/static/css/2.22a7d4ef.chunk.css",
     "static/js/2.50ca549f.chunk.js": "/gym-management/static/js/2.50ca549f.chunk.js",
     "static/js/2.50ca549f.chunk.js.map": "/gym-management/static/js/2.50ca549f.chunk.js.map",
     "index.html": "/gym-management/index.html",
-    "precache-manifest.7f2b0b57a1280aa8bd4e23dbe4b966ee.js": "/gym-management/precache-manifest.7f2b0b57a1280aa8bd4e23dbe4b966ee.js",
+    "precache-manifest.c60b227b189cf6b10b838addd7943c7c.js": "/gym-management/precache-manifest.c60b227b189cf6b10b838addd7943c7c.js",
     "service-worker.js": "/gym-management/service-worker.js",
     "static/css/2.22a7d4ef.chunk.css.map": "/gym-management/static/css/2.22a7d4ef.chunk.css.map",
     "static/css/main.7ef435e9.chunk.css.map": "/gym-management/static/css/main.7ef435e9.chunk.css.map"
