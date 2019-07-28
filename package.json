@@ -2,7 +2,7 @@
   "name": "gym-management",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://htactive-nhungntp.github.io/",
+  "homepage": "https://htactive-nhungntp.github.io/gym-management/",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "canvasjs": "^1.8.1",

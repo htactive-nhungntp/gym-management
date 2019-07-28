@@ -71,7 +71,8 @@ class FormProfileBase extends Component {
         email: this.state.updateEmail,
         user_name: this.state.updateUserName,
         password: this.state.updatePassword,
-        confirm: this.state.updateConfirm
+        confirm: this.state.updateConfirm,
+        avatar: url
       });
       Swaling("Save change successfully !");
     } else {
