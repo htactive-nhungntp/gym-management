@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "74a93661e52efe17669eb30f194e0407",
+    "revision": "16249bc4683523f5ea15cbb75e987363",
     "url": "/gym-management/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/gym-management/static/css/2.22a7d4ef.chunk.css"
   },
   {
-    "revision": "e9c5e73feb6e2c9376ae",
+    "revision": "ad8c5f65507b029e8904",
     "url": "/gym-management/static/css/main.7ef435e9.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/gym-management/static/js/2.50ca549f.chunk.js"
   },
   {
-    "revision": "e9c5e73feb6e2c9376ae",
-    "url": "/gym-management/static/js/main.f34684e1.chunk.js"
+    "revision": "ad8c5f65507b029e8904",
+    "url": "/gym-management/static/js/main.f6a68aaf.chunk.js"
   },
   {
     "revision": "691e89a8d0039c14cd58",
